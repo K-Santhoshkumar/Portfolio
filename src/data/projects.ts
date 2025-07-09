@@ -1,0 +1,356 @@
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  githubUrl: string;
+  demoUrl?: string;
+  imagePath: string;
+  features: string[];
+  challenges: string[];
+  solutions: string[];
+  screenshots?: string[];
+}
+
+export const projects: Project[] = [
+  {
+    id: "1",
+    title: "SocioPedia - Social Media App",
+    description:
+      "A Next.js‑based social media platform with posts, images, likes, comments, and follow functionality.",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "Clerk",
+      "Tailwind CSS",
+      "UploadThing",
+      "Neon",
+      "Shadcn",
+    ],
+    githubUrl: "https://github.com/K-Santhoshkumar/SocioPedia",
+    demoUrl: "https://socio-pedia-black.vercel.app/",
+    imagePath: "/SocioPedia_Screenshots/Screenshot 2025-07-09 165546.png",
+    features: [
+      "Create and share posts with optional image attachments",
+      "Like and unlike posts with optimistic UI updates",
+      "Comment on posts and delete your own posts",
+      "Follow/unfollow suggested users",
+      "Authentication & authorization via Clerk",
+      "Secure file uploads with UploadThing",
+      "Responsive mobile-first design using Tailwind CSS & Shadcn",
+    ],
+    challenges: [
+      "Implementing optimistic UI for likes and comments",
+      "Integrating UploadThing securely for user-generated images",
+      "Balancing server and client components for caching and revalidation",
+      "Managing dynamic routes and access control with Clerk",
+    ],
+    solutions: [
+      "Leveraged React state hooks and Next.js server actions for optimistic updates",
+      "Added server-side validation and UploadThing middleware for secure uploads",
+      "Utilized Next.js App Router features for efficient data fetching and caching",
+      "Configured Clerk middleware and Prisma models for role-based access control",
+    ],
+    screenshots: ["/projects/socio-pedia/screenshot-for-readme.png"],
+  },
+  {
+    id: "2",
+    title: "Blog App – Full‑Stack Blogging Platform",
+    description:
+      "A full-stack blogging platform to create, edit, and share blog posts with Markdown support, user authentication, and a modern UI.",
+    tags: [
+      "React (Vite)",
+      "TailwindCSS",
+      "Quill",
+      "Node.js",
+      "Express",
+      "MongoDB (Mongoose)",
+      "JWT",
+      "Multer",
+      "ImageKit",
+      "GoogleGenAI",
+    ],
+    githubUrl: "https://github.com/K-Santhoshkumar/Blog-App",
+    demoUrl: "https://ksrblogging-platform.netlify.app/",
+    imagePath: "/Blog_app_Screenshots/Screenshot 2025-07-09 163812.png",
+    features: [
+      "User registration and login with JWT authentication",
+      "Create, edit, and delete blog posts with Markdown support",
+      "Upload and manage images via Cloudinary integration",
+      "Responsive, mobile-first UI with Tailwind CSS",
+      "View, comment, and like blog posts",
+      "Profile management and author pages",
+      "SEO-friendly routing and meta tags",
+    ],
+    challenges: [
+      "Implementing secure authentication and authorization",
+      "Handling image uploads and storage efficiently",
+      "Ensuring SEO and accessibility best practices",
+    ],
+    solutions: [
+      "Used JWT for secure user sessions and protected routes",
+      "Integrated Cloudinary for scalable image hosting",
+      "Applied React Helmet and semantic HTML for SEO",
+    ],
+    screenshots: ["/projects/blog-app/screenshot.png"],
+  },
+  {
+    id: "3",
+    title: "Recipe App – Cooking Blog",
+    description:
+      "A full-stack web application to browse, search, and submit food recipes with image attachments and a responsive, dynamic UI.",
+    tags: [
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose",
+      "EJS",
+      "Tailwind CSS",
+      "express-fileupload",
+      "connect-flash",
+    ],
+    githubUrl: "https://github.com/K-Santhoshkumar/Recipe-App",
+    demoUrl: "https://recipe-app-xfal.onrender.com/",
+    imagePath: "/Recipe_app_Screenshots/Screenshot 2025-07-09 164418.png",
+    features: [
+      "Homepage showcasing latest recipes and top categories",
+      "Browse all categories and filter recipes by category",
+      "View detailed recipe pages with name, description, ingredients, and image",
+      "Full-text search over recipe name & description using MongoDB text indexes",
+      "Explore latest and random recipes",
+      "Submit new recipes via form with image upload and flash feedback",
+      "Contact form that stores user messages in database",
+      "Responsive layout with express-ejs-layouts and Tailwind CSS",
+    ],
+    challenges: [
+      "Implementing full-text search with MongoDB",
+      "Handling file uploads securely",
+      "Maintaining a clean, responsive UI with EJS and Tailwind",
+    ],
+    solutions: [
+      "Used MongoDB text indexes for efficient search",
+      "Applied express-fileupload and server-side validation for uploads",
+      "Leveraged Tailwind CSS for modern, responsive design",
+    ],
+    screenshots: ["/projects/recipe-app/screenshot.png"],
+  },
+  {
+    id: "4",
+    title: "Excel Analysis Platform",
+    description:
+      "A web platform for uploading, analyzing, and visualizing Excel data with interactive charts and downloadable reports.",
+    tags: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "xlsx",
+      "Chart.js",
+      "SheetJS",
+      "ThreeJS",
+      "PDFtoCanvas",
+      "Tailwind CSS",
+      "JWT",
+    ],
+    githubUrl: "https://github.com/K-Santhoshkumar/Excel-Analysis-Platform",
+    demoUrl: "https://excel-analysis-platforom.netlify.app/",
+    imagePath:
+      "/Excel_analysis_platform_Screenshots/Screenshot 2025-07-09 165138.png",
+    features: [
+      "Upload Excel files and parse data client-side",
+      "Visualize data with interactive charts (Chart.js)",
+      "Download processed data and reports",
+      "Responsive dashboard UI with Tailwind CSS",
+      "Data validation and error handling for uploads",
+    ],
+    challenges: [
+      "Parsing and validating complex Excel files in-browser",
+      "Rendering large datasets efficiently",
+      "Ensuring cross-browser compatibility for file uploads",
+    ],
+    solutions: [
+      "Used xlsx library for robust Excel parsing",
+      "Optimized chart rendering and lazy loading",
+      "Tested and polyfilled file APIs for compatibility",
+    ],
+    screenshots: ["/projects/excel-analysis/screenshot.png"],
+  },
+  {
+    id: "5",
+    title: "CRUD Operations with React",
+    description:
+      "A demo project showcasing Create, Read, Update, and Delete operations using React for front-end state management and user interface.",
+    tags: ["React.js", "JavaScript", "CSS", "HTML"],
+    githubUrl: "https://github.com/K-Santhoshkumar/CRUD-operations-with-React",
+    demoUrl: "",
+    imagePath: "",
+    features: [
+      "Add, edit, and delete user records",
+      "Instant UI updates with React state",
+      "Responsive, clean interface",
+    ],
+    challenges: ["Managing local state and form validation"],
+    solutions: ["Used React hooks for state and event handling"],
+    screenshots: ["/projects/crud-operations-with-react/screenshot.png"],
+  },
+  {
+    id: "6",
+    title: "Digital Marketing for Branded Watches",
+    description:
+      "A digital marketing website for branded watches, showcasing various models with images, descriptions, and pricing. Enhances brand visibility and customer engagement.",
+    tags: ["PHP", "HTML", "CSS", "JavaScript"],
+    githubUrl:
+      "https://github.com/K-Santhoshkumar/Digital-marketing-for-branded-watches",
+    demoUrl: "",
+    imagePath:
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.37_315a3841.jpg",
+    features: [
+      "Product gallery for branded watches",
+      "Detailed product descriptions and pricing",
+      "Responsive website design",
+      "Customer engagement features",
+    ],
+    challenges: ["Showcasing products in an engaging and informative way"],
+    solutions: [
+      "Used modern web technologies and responsive design principles",
+    ],
+    screenshots: [
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.37_315a3841.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.36_780141b3.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.38_bd7610ea.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.37_b9daffb4.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.37_2b46fdf9.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.36_1effd44c.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.36_461464bc.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.36_ce913392.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.36_b711cfc1.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.36_deba4658.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 20.11.13_70f99a6b.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.59.22_26278f5b.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.59.21_70699ee1.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.59.15_383fb08a.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.58.58_990ef1bf.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.58.59_ae7d6080.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.59.12_e23fcacb.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.59.00_6a4999e7.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.59.02_c3623847.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.51.40_6347cddf.jpg",
+      "/Branded_watch_web_Screenshots/WhatsApp Image 2025-07-09 at 19.50.20_8e501405.jpg",
+    ],
+  },
+  {
+    id: "7",
+    title: "Car Rental System",
+    description:
+      "A web-based car rental management system for booking, managing, and tracking vehicle rentals with admin and user dashboards.",
+    tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3"],
+    githubUrl: "https://github.com/K-Santhoshkumar/Car-Rental-System",
+    demoUrl: "",
+    imagePath: "",
+    features: [
+      "User registration and login",
+      "Browse and book available vehicles",
+      "Admin dashboard for managing cars, bookings, and users",
+      "Payment integration and booking history",
+      "Responsive UI with Bootstrap",
+    ],
+    challenges: [
+      "Implementing secure authentication and authorization",
+      "Managing relational data for cars, users, and bookings",
+      "Ensuring data consistency and validation",
+    ],
+    solutions: [
+      "Used PHP sessions and hashed passwords for security",
+      "Structured MySQL database for relational data",
+      "Applied server-side validation and error handling",
+    ],
+    screenshots: ["/projects/car-rental/screenshot.png"],
+  },
+  {
+    id: "8",
+    title: "Currency Converter",
+    description:
+      "A web app to convert between multiple currencies using real-time exchange rates from an external API.",
+    tags: ["JavaScript", "HTML5", "CSS3", "API"],
+    githubUrl: "https://github.com/K-Santhoshkumar/Currency-Converter",
+    demoUrl: "",
+    imagePath: "",
+    features: [
+      "Convert between major world currencies",
+      "Fetch real-time exchange rates from API",
+      "User-friendly input and result display",
+      "Responsive design for mobile and desktop",
+    ],
+    challenges: [
+      "Integrating and handling API errors",
+      "Ensuring accurate and up-to-date rates",
+      "Designing a clean, intuitive UI",
+    ],
+    solutions: [
+      "Used fetch API with error handling",
+      "Updated rates on each conversion request",
+      "Applied responsive CSS for usability",
+    ],
+    screenshots: ["/projects/currency-converter/screenshot.png"],
+  },
+  {
+    id: "9",
+    title: "BMI Health Tracker",
+    description:
+      "A responsive web app for calculating, tracking, and analyzing Body Mass Index (BMI) over time. Features personalized health recommendations, trend charts, and historical records for effective weight management and health monitoring.",
+    tags: ["React.js", "JavaScript", "CSS", "lucide-react"],
+    githubUrl: "https://github.com/K-Santhoshkumar/BMI-health-tracker",
+    demoUrl: "",
+    imagePath: "/BMI_Screenshots/Screenshot 2025-07-08 202021.png",
+    features: [
+      "BMI calculator supporting metric and imperial units",
+      "Personalized health recommendations based on BMI category",
+      "Real-time BMI trend analysis with interactive charts",
+      "Historical BMI and weight record tracking",
+      "Instant BMI category feedback and ideal weight range display",
+      "Responsive design for mobile and desktop",
+      "Clean, modern UI with contextual icons",
+      "Easy record management (add/delete)",
+      "Data visualizations for progress and trends",
+    ],
+    challenges: [
+      "Synchronizing BMI calculations across different units",
+      "Visualizing BMI trends and categories clearly",
+      "Building a scalable UI for data entry, charts, and history",
+      "Providing personalized recommendations dynamically",
+    ],
+    solutions: [
+      "Modular utility functions for BMI, ideal weight, and recommendations",
+      "Custom React hooks for stateful BMI history and statistics",
+      "SVG-based chart component with trend analysis and legends",
+      "Component-driven design for maintainable and reusable UI",
+    ],
+    screenshots: ["/projects/bmi-health-tracker/screenshot.png"],
+  },
+  {
+    id: "10",
+    title: "Weather App",
+    description:
+      "A React-based weather application fetching real-time weather data. Provides current conditions, forecasts, and responsive design for easy access on any device.",
+    tags: ["React.js", "JavaScript", "CSS", "HTML"],
+    githubUrl: "https://github.com/K-Santhoshkumar/weather-app",
+    demoUrl: "",
+    imagePath: "",
+    features: [
+      "Fetches real-time weather data from public APIs",
+      "Displays current weather and multi-day forecasts",
+      "Responsive design for mobile and desktop",
+      "Search by city or location",
+      "Clean, intuitive UI",
+    ],
+    challenges: [
+      "Handling asynchronous API data and error states",
+      "Maintaining responsive design across devices",
+    ],
+    solutions: [
+      "Used React hooks for data fetching and state management",
+      "Employed CSS Flexbox/Grid for layout adaptability",
+    ],
+    screenshots: ["/projects/weather-app/screenshot.png"],
+  },
+];
