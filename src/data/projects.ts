@@ -198,7 +198,7 @@ export const projects: Project[] = [
     title: "Digital Marketing for Branded Watches",
     description:
       "A digital marketing website for branded watches, showcasing various models with images, descriptions, and pricing. Enhances brand visibility and customer engagement.",
-    tags: ["PHP", "HTML", "CSS", "JavaScript"],
+    tags: ["PHP", "HTML", "CSS", "JavaScript", "Supabase"],
     githubUrl:
       "https://github.com/K-Santhoshkumar/Digital-marketing-for-branded-watches",
     demoUrl: "",
