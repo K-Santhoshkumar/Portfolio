@@ -180,10 +180,10 @@ export const projects: Project[] = [
     title: "CRUD Operations with React",
     description:
       "A demo project showcasing Create, Read, Update, and Delete operations using React for front-end state management and user interface.",
-    tags: ["React.js", "JavaScript", "CSS", "HTML"],
+    tags: ["React.js", "TypeScript", "CSS", "HTML"],
     githubUrl: "https://github.com/K-Santhoshkumar/CRUD-operations-with-React",
     demoUrl: "",
-    imagePath: "",
+    imagePath: "/React_CRUD_Screenshots/Screenshot 2025-07-10 124103.png",
     features: [
       "Add, edit, and delete user records",
       "Instant UI updates with React state",
@@ -191,7 +191,13 @@ export const projects: Project[] = [
     ],
     challenges: ["Managing local state and form validation"],
     solutions: ["Used React hooks for state and event handling"],
-    screenshots: ["/projects/crud-operations-with-react/screenshot.png"],
+    screenshots: [
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124103.png",
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124114.png",
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124129.png",
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124149.png",
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124216.png",
+    ],
   },
   {
     id: "6",
@@ -274,7 +280,8 @@ export const projects: Project[] = [
     tags: ["JavaScript", "HTML5", "CSS3", "API"],
     githubUrl: "https://github.com/K-Santhoshkumar/Currency-Converter",
     demoUrl: "",
-    imagePath: "",
+    imagePath:
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125450.png",
     features: [
       "Convert between major world currencies",
       "Fetch real-time exchange rates from API",
@@ -291,7 +298,13 @@ export const projects: Project[] = [
       "Updated rates on each conversion request",
       "Applied responsive CSS for usability",
     ],
-    screenshots: ["/projects/currency-converter/screenshot.png"],
+    screenshots: [
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125450.png",
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125501.png",
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125518.png",
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125544.png",
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125607.png",
+    ],
   },
   {
     id: "9",
@@ -332,10 +345,10 @@ export const projects: Project[] = [
     title: "Weather App",
     description:
       "A React-based weather application fetching real-time weather data. Provides current conditions, forecasts, and responsive design for easy access on any device.",
-    tags: ["React.js", "JavaScript", "CSS", "HTML"],
-    githubUrl: "https://github.com/K-Santhoshkumar/weather-app",
+    tags: ["React.js", "JavaScript", "CSS", "HTML", "OpenWeatherMap API"],
+    githubUrl: "https://github.com/K-Santhoshkumar/Weather-app.git",
     demoUrl: "",
-    imagePath: "",
+    imagePath: "/Weather_app_Screenshots/Screenshot 2025-07-10 122234.png",
     features: [
       "Fetches real-time weather data from public APIs",
       "Displays current weather and multi-day forecasts",
@@ -351,6 +364,45 @@ export const projects: Project[] = [
       "Used React hooks for data fetching and state management",
       "Employed CSS Flexbox/Grid for layout adaptability",
     ],
-    screenshots: ["/projects/weather-app/screenshot.png"],
+    screenshots: [
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122234.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122243.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122255.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122304.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122331.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122351.png",
+    ],
+  },
+  {
+    id: "11",
+    title: "Food Cart",
+    description:
+      "A web-based application for browsing, selecting, and managing food items in a virtual cart. Designed to streamline the online food ordering experience with a focus on intuitive UI and responsive design. Ideal for learning or demonstrating core e-commerce cart functionalities.",
+    tags: ["JavaScript", "CSS", "HTML", "React"],
+    githubUrl: "https://github.com/K-Santhoshkumar/Food-Cart",
+    demoUrl: "",
+    imagePath: "/Foodcart_Screenshots/Screenshot 2025-07-10 130304.png",
+    features: [
+      "Interactive food item listing with images and prices",
+      "Add/remove items to and from the cart",
+      "Dynamic cart summary with total calculation",
+      "Responsive design for desktop and mobile",
+      "Simple and clean UI for easy navigation",
+      "Basic cart persistence during session",
+      "Visual feedback for cart actions",
+    ],
+    challenges: [
+      "Managing cart state and updates in real time",
+      "Ensuring a responsive interface across devices",
+      "Handling price calculations and cart summary accuracy",
+      "Keeping UI/UX intuitive for non-technical users",
+    ],
+    solutions: [
+      "Utilized modular JavaScript functions for cart operations",
+      "Employed CSS flexbox/grid for responsive layouts",
+      "Implemented event-driven updates for immediate cart feedback",
+      "Structured code for maintainability and scalability",
+    ],
+    screenshots: ["/Foodcart_Screenshots/Screenshot 2025-07-10 130304.png"],
   },
 ];

@@ -6,8 +6,9 @@ import { projects } from "../../../data/projects";
 import type { Project } from "@/data/projects";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 
 const DUMMY_IMAGE = "https://placehold.co/600x400?text=Project";
@@ -166,7 +167,53 @@ export default function ProjectDetail() {
   );
   if (!project) notFound();
   const screenshots = getProjectScreenshots(project);
-  const [mainImg, setMainImg] = React.useState<string>(screenshots[0]);
+  const [mainImgIdx, setMainImgIdx] = React.useState<number>(0);
+  const mainImg = screenshots[mainImgIdx];
+  const goLeft = () =>
+    setMainImgIdx((prev) => (prev === 0 ? screenshots.length - 1 : prev - 1));
+  const goRight = () =>
+    setMainImgIdx((prev) => (prev === screenshots.length - 1 ? 0 : prev + 1));
+
+  // Autoplay logic
+  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isPaused = useRef(false);
+
+  useEffect(() => {
+    if (screenshots.length <= 1) return;
+    if (autoplayRef.current) clearInterval(autoplayRef.current);
+    if (!isPaused.current) {
+      autoplayRef.current = setInterval(() => {
+        setMainImgIdx((prev) =>
+          prev === screenshots.length - 1 ? 0 : prev + 1
+        );
+      }, 3500);
+    }
+    return () => {
+      if (autoplayRef.current) clearInterval(autoplayRef.current);
+    };
+  }, [screenshots.length, mainImgIdx]);
+
+  // Pause on hover/focus
+  const handleMouseEnter = () => {
+    isPaused.current = true;
+    if (autoplayRef.current) clearInterval(autoplayRef.current);
+  };
+  const handleMouseLeave = () => {
+    isPaused.current = false;
+  };
+
+  // Swipe gesture logic
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX = e.changedTouches[0].screenX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX - touchStartX > 40) goLeft();
+    else if (touchStartX - touchEndX > 40) goRight();
+  };
   const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
   ) => {
@@ -191,34 +238,70 @@ export default function ProjectDetail() {
       >
         {/* Gallery */}
         <div className="md:w-2/5 w-full flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700 mb-4"
+          <div
+            ref={carouselRef}
+            className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700 mb-4 flex items-center justify-center"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleMouseEnter}
+            onBlur={handleMouseLeave}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            tabIndex={0}
+            aria-label="Project screenshots carousel"
           >
-            <Image
-              src={mainImg}
-              alt={project.title}
-              fill
-              className="object-cover"
-              onError={handleImageError}
-              sizes="(max-width: 768px) 100vw, 40vw"
-              priority
-            />
-          </motion.div>
+            {screenshots.length > 1 && (
+              <button
+                onClick={goLeft}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-cyan-500/80 text-white rounded-full p-2 shadow-lg focus:outline-none"
+                aria-label="Previous screenshot"
+              >
+                &#8592;
+              </button>
+            )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={mainImg}
+                initial={{ opacity: 0, x: 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -60 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 w-full h-full flex items-center justify-center"
+              >
+                <Image
+                  src={mainImg}
+                  alt={project.title}
+                  fill
+                  className="object-cover rounded-xl border-2 border-cyan-400 shadow-xl"
+                  onError={handleImageError}
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+            {screenshots.length > 1 && (
+              <button
+                onClick={goRight}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-cyan-500/80 text-white rounded-full p-2 shadow-lg focus:outline-none"
+                aria-label="Next screenshot"
+              >
+                &#8594;
+              </button>
+            )}
+          </div>
           {screenshots.length > 1 && (
-            <div className="flex gap-2 flex-wrap justify-center">
+            <div className="flex gap-2 flex-wrap justify-center mt-2">
               {screenshots.map((src, i) => (
-                <button
+                <motion.button
                   key={src}
-                  onClick={() => setMainImg(src)}
-                  className={`border-2 rounded-lg overflow-hidden w-16 h-12 focus:outline-none ${
-                    mainImg === src
-                      ? "border-cyan-500"
-                      : "border-gray-200 dark:border-gray-600"
+                  onClick={() => setMainImgIdx(i)}
+                  className={`border-2 rounded-lg overflow-hidden w-16 h-12 focus:outline-none transition-all duration-200 ${
+                    mainImgIdx === i
+                      ? "border-cyan-500 scale-110 shadow-cyan-400/30 shadow-lg"
+                      : "border-gray-200 dark:border-gray-600 opacity-70 hover:opacity-100"
                   }`}
                   aria-label={`Show screenshot ${i + 1}`}
+                  whileHover={{ scale: 1.12 }}
                 >
                   <Image
                     src={src}
@@ -228,7 +311,7 @@ export default function ProjectDetail() {
                     className="object-cover w-full h-full"
                     onError={handleImageError}
                   />
-                </button>
+                </motion.button>
               ))}
             </div>
           )}

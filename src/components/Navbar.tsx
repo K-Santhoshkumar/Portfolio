@@ -31,16 +31,22 @@ function NavLink({ href, isActive, children }: NavLinkProps) {
     <motion.div
       whileHover={{ scale: 1.12 }}
       transition={{ type: "spring", stiffness: 300 }}
+      className="relative px-2"
     >
       <Link
         href={href}
         className={`px-5 py-2 rounded transition-colors font-semibold text-lg ${
-          isActive
-            ? "text-cyan-500 underline underline-offset-8"
-            : "text-gray-200 hover:text-cyan-400 hover:underline hover:underline-offset-8"
+          isActive ? "text-cyan-500" : "text-gray-200 hover:text-cyan-400"
         }`}
       >
         {children}
+        {isActive && (
+          <motion.div
+            layoutId="navbar-underline"
+            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-3/4 h-1 bg-cyan-400 rounded-full"
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          />
+        )}
       </Link>
     </motion.div>
   );

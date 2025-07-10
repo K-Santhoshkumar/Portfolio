@@ -46,6 +46,7 @@ const tagColors = {
 };
 
 export default function Projects() {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   return (
     <section
       id="projects"
@@ -59,80 +60,175 @@ export default function Projects() {
           Explore my work. Click a project for details.
         </p>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project: Project, idx: number) => {
-          const imagePath = project.imagePath;
-          return (
-            <Link
-              key={project.id}
-              href={`/projects/${project.id}`}
-              className="group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400"
-              tabIndex={0}
-              aria-label={`View details for ${project.title}`}
-            >
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                whileHover={{
-                  y: -8,
-                  scale: 1.04,
-                  boxShadow: "0 8px 32px 0 rgba(0,0,0,0.10)",
-                }}
-                className="transition-transform duration-300"
+      {/* Slider for mobile, grid for desktop */}
+      {isMobile ? (
+        <motion.div
+          className="flex gap-6 overflow-x-auto pb-4"
+          drag="x"
+          dragConstraints={{ left: -300 * (projects.length - 1), right: 0 }}
+          whileTap={{ cursor: "grabbing" }}
+        >
+          {projects.map((project: Project, idx: number) => {
+            const imagePath = project.imagePath;
+            return (
+              <Link
+                key={project.id}
+                href={`/projects/${project.id}`}
+                className="min-w-[320px] max-w-xs group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                tabIndex={0}
+                aria-label={`View details for ${project.title}`}
               >
-                <div className="relative h-48 w-full">
-                  {isValidImagePath(imagePath) ? (
-                    <Image
-                      src={imagePath}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        const parent = e.currentTarget
-                          .parentNode as HTMLElement | null;
-                        if (parent) {
-                          const fallback =
-                            parent.querySelector(".fallback-img");
-                          fallback?.classList.remove("hidden");
-                        }
-                      }}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      priority={idx === 0}
-                    />
-                  ) : null}
-                  <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black text-white text-center text-base font-semibold hidden">
-                    {project.title}
+                <motion.div
+                  initial={{ opacity: 0, x: 60 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  whileHover={{
+                    scale: 1.04,
+                    boxShadow: "0 8px 32px 0 rgba(0,0,0,0.10)",
+                  }}
+                  className="transition-transform duration-300"
+                >
+                  <div className="relative h-48 w-full">
+                    {isValidImagePath(imagePath) ? (
+                      <Image
+                        src={imagePath}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                          const parent = e.currentTarget
+                            .parentNode as HTMLElement | null;
+                          if (parent) {
+                            const fallback =
+                              parent.querySelector(".fallback-img");
+                            fallback?.classList.remove("hidden");
+                          }
+                        }}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={idx === 0}
+                      />
+                    ) : null}
+                    <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black text-white text-center text-base font-semibold hidden">
+                      {project.title}
+                    </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 min-h-[40px]">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${
-                          tagColors[tag as keyof typeof tagColors] ||
-                          "bg-gray-100 text-gray-700"
-                        }`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 min-h-[40px]">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${
+                            tagColors[tag as keyof typeof tagColors] ||
+                            "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            </Link>
-          );
-        })}
-      </div>
+                </motion.div>
+              </Link>
+            );
+          })}
+        </motion.div>
+      ) : (
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.12,
+              },
+            },
+          }}
+        >
+          {projects.map((project: Project, idx: number) => {
+            const imagePath = project.imagePath;
+            return (
+              <Link
+                key={project.id}
+                href={`/projects/${project.id}`}
+                className="group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                tabIndex={0}
+                aria-label={`View details for ${project.title}`}
+              >
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 40 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.04,
+                    boxShadow: "0 8px 32px 0 rgba(0,0,0,0.10)",
+                  }}
+                  className="transition-transform duration-300"
+                >
+                  <div className="relative h-48 w-full">
+                    {isValidImagePath(imagePath) ? (
+                      <Image
+                        src={imagePath}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                          const parent = e.currentTarget
+                            .parentNode as HTMLElement | null;
+                          if (parent) {
+                            const fallback =
+                              parent.querySelector(".fallback-img");
+                            fallback?.classList.remove("hidden");
+                          }
+                        }}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={idx === 0}
+                      />
+                    ) : null}
+                    <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black text-white text-center text-base font-semibold hidden">
+                      {project.title}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 min-h-[40px]">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${
+                            tagColors[tag as keyof typeof tagColors] ||
+                            "bg-gray-100 text-gray-700"
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
+            );
+          })}
+        </motion.div>
+      )}
     </section>
   );
 }
