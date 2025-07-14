@@ -252,7 +252,8 @@ export const projects: Project[] = [
     tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3"],
     githubUrl: "https://github.com/K-Santhoshkumar/Car-Rental-System",
     demoUrl: "",
-    imagePath: "",
+    imagePath:
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220825.png",
     features: [
       "User registration and login",
       "Browse and book available vehicles",
@@ -270,7 +271,15 @@ export const projects: Project[] = [
       "Structured MySQL database for relational data",
       "Applied server-side validation and error handling",
     ],
-    screenshots: ["/projects/car-rental/screenshot.png"],
+    screenshots: [
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220825.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220848.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220919.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220938.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220957.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 221018.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 221046.png",
+    ],
   },
   {
     id: "8",
@@ -403,6 +412,19 @@ export const projects: Project[] = [
       "Implemented event-driven updates for immediate cart feedback",
       "Structured code for maintainability and scalability",
     ],
-    screenshots: ["/Foodcart_Screenshots/Screenshot 2025-07-10 130304.png"],
+    screenshots: [
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130304.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130315.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130327.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130346.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130402.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130412.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130429.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130441.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130452.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130508.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130518.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130543.png",
+    ],
   },
 ];

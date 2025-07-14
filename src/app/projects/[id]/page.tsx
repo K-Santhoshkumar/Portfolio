@@ -74,6 +74,17 @@ function getProjectScreenshots(project: Project) {
       "/Excel_analysis_platform_Screenshots/Screenshot 2025-07-09 164540.png",
     ];
   }
+  if (project.title.includes("Car Rental System")) {
+    return [
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220825.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220848.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220919.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220938.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220957.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 221018.png",
+      "/Car_rental_system_Screenshots/Screenshot 2025-07-14 221046.png",
+    ];
+  }
   if (project.title.toLowerCase().includes("bmi")) {
     return [
       "/BMI_Screenshots/Screenshot 2025-07-08 202021.png",

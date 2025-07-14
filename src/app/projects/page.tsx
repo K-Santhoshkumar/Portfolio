@@ -63,7 +63,7 @@ export default function Projects() {
       {/* Slider for mobile, grid for desktop */}
       {isMobile ? (
         <motion.div
-          className="flex gap-6 overflow-x-auto pb-4"
+          className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-2 snap-x snap-mandatory"
           drag="x"
           dragConstraints={{ left: -300 * (projects.length - 1), right: 0 }}
           whileTap={{ cursor: "grabbing" }}
@@ -74,7 +74,7 @@ export default function Projects() {
               <Link
                 key={project.id}
                 href={`/projects/${project.id}`}
-                className="min-w-[320px] max-w-xs group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                className="min-w-[90vw] max-w-xs group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400 snap-center mx-2"
                 tabIndex={0}
                 aria-label={`View details for ${project.title}`}
               >
@@ -142,7 +142,7 @@ export default function Projects() {
         </motion.div>
       ) : (
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           initial="hidden"
           animate="visible"
           variants={{
