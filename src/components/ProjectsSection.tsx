@@ -9,28 +9,6 @@ import { projects, Project } from "../data/projects";
 
 const DUMMY_IMAGE = "https://placehold.co/600x400?text=Project";
 
-function getProjectImage(project: Project): string {
-  if (project.title.includes("SocioPedia")) {
-    return "/SocioPedia_Screenshots/Screenshot 2025-07-09 165546.png";
-  }
-  if (project.title.includes("Blog")) {
-    return "/Blog_app_Screenshots/Screenshot 2025-07-09 163812.png";
-  }
-  if (project.title.includes("Recipe")) {
-    return "/Recipe_app_Screenshots/Screenshot 2025-07-09 164418.png";
-  }
-  if (project.title.includes("Excel Analysis Platform")) {
-    return "/Excel_analysis_platform_Screenshots/Screenshot 2025-07-09 165138.png";
-  }
-  if (project.title.includes("Car Rental System")) {
-    return "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220825.png";
-  }
-  if (project.title.toLowerCase().includes("bmi")) {
-    return "/BMI_Screenshots/Screenshot 2025-07-08 202021.png";
-  }
-  return DUMMY_IMAGE;
-}
-
 export default function ProjectsSection(): React.ReactElement {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   return (
@@ -71,7 +49,7 @@ export default function ProjectsSection(): React.ReactElement {
             >
               <div className="relative h-48 w-full bg-gray-900">
                 <Image
-                  src={getProjectImage(project)}
+                  src={project.imagePath}
                   alt={project.title}
                   fill
                   sizes="100vw"
@@ -147,7 +125,7 @@ export default function ProjectsSection(): React.ReactElement {
             >
               <div className="relative h-48 w-full bg-gray-900">
                 <Image
-                  src={getProjectImage(project)}
+                  src={project.imagePath}
                   alt={project.title}
                   fill
                   sizes="100vw"
