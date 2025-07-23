@@ -92,13 +92,6 @@ export default function Footer() {
         </div>
 
         {/* Attribution line */}
-        <div className="mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-400">
-          <p>
-            Built with <span className="text-cyan-400">Next.js</span>,{" "}
-            <span className="text-cyan-400">Tailwind CSS</span>, and{" "}
-            <span className="text-cyan-400">Framer Motion</span>
-          </p>
-        </div>
       </div>
     </motion.footer>
   );
