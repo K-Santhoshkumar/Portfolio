@@ -154,6 +154,11 @@ export const skills: SkillItem[] = [
     color: "text-black dark:text-white",
     type: "technical",
   },
+  // Additional Backend & Real-time Frameworks
+  { name: "Flask", icon: "SiFlask", color: "text-gray-700", type: "technical" },
+  { name: "WebSockets", icon: "FaNetworkWired", color: "text-blue-500", type: "technical" },
+  { name: "Django", icon: "SiDjango", color: "text-green-700", type: "technical" },
+  { name: "FastAPI", icon: "SiFastapi", color: "text-teal-500", type: "technical" },
   // Soft Skills
   {
     name: "Quick Learner",

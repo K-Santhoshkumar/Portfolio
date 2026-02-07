@@ -2,6 +2,9 @@
 import { projects, Project } from "../../data/projects";
 import Image from "next/image";
 import Link from "next/link";
+import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
+import GlareCard from "@/components/ui/GlareCard";
 import { motion } from "framer-motion";
 
 function isValidImagePath(path: string): boolean {
@@ -125,10 +128,9 @@ export default function Projects() {
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${
-                            tagColors[tag as keyof typeof tagColors] ||
+                          className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${tagColors[tag as keyof typeof tagColors] ||
                             "bg-gray-100 text-gray-700"
-                          }`}
+                            }`}
                         >
                           {tag}
                         </span>
@@ -141,93 +143,70 @@ export default function Projects() {
           })}
         </motion.div>
       ) : (
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.12,
-              },
-            },
-          }}
-        >
-          {projects.map((project: Project, idx: number) => {
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project: Project) => {
             const imagePath = project.imagePath;
             return (
-              <Link
+              <GlareCard
                 key={project.id}
-                href={`/projects/${project.id}`}
-                className="group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                tabIndex={0}
-                aria-label={`View details for ${project.title}`}
+                className="rounded-3xl bg-card-bg/80 backdrop-blur-xl border-card-border/60 shadow-xl group"
               >
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0, y: 40 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  whileHover={{
-                    y: -8,
-                    scale: 1.04,
-                    boxShadow: "0 8px 32px 0 rgba(0,0,0,0.10)",
-                  }}
-                  className="transition-transform duration-300"
-                >
-                  <div className="relative h-48 w-full">
+                <div className="relative h-full flex flex-col">
+                  <div className="relative h-64 w-full overflow-hidden rounded-t-3xl">
                     {isValidImagePath(imagePath) ? (
                       <Image
                         src={imagePath}
                         alt={project.title}
                         fill
-                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                         onError={(e) => {
                           e.currentTarget.style.display = "none";
-                          const parent = e.currentTarget
-                            .parentNode as HTMLElement | null;
+                          const parent = e.currentTarget.parentNode as HTMLElement | null;
                           if (parent) {
-                            const fallback =
-                              parent.querySelector(".fallback-img");
+                            const fallback = parent.querySelector(".fallback-img");
                             fallback?.classList.remove("hidden");
                           }
                         }}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        priority={idx === 0}
                       />
                     ) : null}
                     <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black text-white text-center text-base font-semibold hidden">
                       {project.title}
                     </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex items-end p-6">
+                      <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300 w-full flex justify-between items-center">
+                        <span className="font-bold text-lg text-primary">View Project</span>
+                        <FiExternalLink className="text-primary" size={24} />
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 min-h-[40px]">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${
-                            tagColors[tag as keyof typeof tagColors] ||
-                            "bg-gray-100 text-gray-700"
-                          }`}
-                        >
-                          {tag}
+                  <div className="p-8 flex-grow">
+                    <h3 className="text-2xl font-bold mb-3 text-foreground dark:text-white group-hover:text-primary transition-colors">{project.title}</h3>
+                    <p className="text-foreground/80 dark:text-gray-400 text-sm mb-6 line-clamp-2 leading-relaxed font-medium">{project.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {project.tags.map((tech) => (
+                        <span key={tech} className={`text-[10px] uppercase font-bold px-3 py-1.5 rounded-full border border-secondary/20 ${tagColors[tech as keyof typeof tagColors] || "bg-secondary/5 text-secondary"}`}>
+                          {tech}
                         </span>
                       ))}
                     </div>
+                    <div className="flex gap-4">
+                      <Link href={`/projects/${project.id}`} className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-foreground text-background font-bold hover:bg-primary hover:text-white transition-all shadow-md z-20 relative">
+                        <FaGithub size={18} /> Details
+                      </Link>
+                      {project.demoUrl && (
+                        <Link href={project.demoUrl} target="_blank" className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-card-border font-bold hover:border-primary hover:text-primary transition-all z-20 relative">
+                          <FiExternalLink size={18} /> Demo
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </motion.div>
-              </Link>
+                </div>
+              </GlareCard>
             );
           })}
-        </motion.div>
+        </div>
       )}
     </section>
   );

@@ -27,7 +27,7 @@ export default function Footer() {
         icon: (
           <FaGithub
             size={28}
-            className="text-white hover:text-cyan-400 transition-colors"
+            className="text-foreground hover:text-cyan-400 transition-colors"
           />
         ),
         href: "https://github.com/K-Santhoshkumar",
@@ -40,34 +40,36 @@ export default function Footer() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="z-10 border-t border-gray-800 bg-black text-white shadow-[0_-2px_16px_0_rgba(0,0,0,0.7)]"
+      className="z-10 border-t border-card-border/50 bg-background/40 backdrop-blur-xl relative"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo and copyright */}
-          <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
+          <div className="flex flex-col items-center md:items-start mb-10 md:mb-0">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="flex items-center"
+              className="flex items-center mb-4"
             >
-              <span className="text-xl font-bold mr-2">SANTHOSHKUMAR K</span>
-              <span className="text-sm text-gray-400">Erode, Tamil Nadu</span>
+              <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">SANTHOSHKUMAR K</span>
             </motion.div>
-            <div className="flex gap-6 mt-4">
+            <p className="text-foreground font-medium mb-6 max-w-sm text-center md:text-left">
+              Crafting premium digital experiences with precision and innovative design.
+            </p>
+            <div className="flex gap-6">
               {socialLinks.map((link, index) => (
                 <Link
                   key={index}
                   href={link.href}
                   target="_blank"
                   aria-label={link.label}
-                  className="hover:scale-110 transition-transform"
+                  className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1"
                 >
                   {link.icon}
                 </Link>
               ))}
             </div>
-            <p className="mt-2 text-xs text-gray-400">
-              © {new Date().getFullYear()} All rights reserved
+            <p className="mt-8 text-xs font-bold text-foreground uppercase tracking-widest">
+              © {new Date().getFullYear()} SANTHOSHKUMAR K
             </p>
           </div>
 
@@ -107,7 +109,7 @@ function FooterLink({ href, children }: FooterLinkProps) {
       <Link href={href}>
         <motion.p
           whileHover={{ x: 5 }}
-          className="text-sm text-gray-300 hover:text-cyan-400 transition-colors"
+          className="text-sm font-bold text-secondary hover:text-primary transition-colors"
         >
           {children}
         </motion.p>

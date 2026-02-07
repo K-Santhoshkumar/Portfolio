@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FiMail, FiPhone, FiGithub, FiLinkedin } from "react-icons/fi";
+import MagicCard from "@/components/ui/MagicCard";
 
 export default function ContactSection() {
   const contactMethods = [
@@ -33,43 +34,44 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 max-w-6xl mx-auto text-white">
+    <section id="contact" className="py-20 px-4 max-w-6xl mx-auto text-foreground">
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">
+        <h2 className="text-4xl md:text-5xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
           Get In Touch
         </h2>
-        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-          Feel free to reach out for collaborations or opportunities
+        <p className="text-lg text-foreground dark:text-gray-300 max-w-xl mx-auto font-medium leading-relaxed">
+          I am always open to discussing new opportunities, creative ideas or visions to be part of your projects.
         </p>
       </motion.div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {contactMethods.map((method, index) => (
           <motion.div
             key={method.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            whileHover={{ scale: 1.03 }}
-            className="p-6 rounded-xl bg-gray-800/70 shadow-sm hover:shadow-md transition-all border border-gray-700 flex flex-col items-center"
           >
-            <Link
-              href={method.href}
-              target="_blank"
-              className="flex flex-col items-center gap-2"
-            >
-              <div className="mb-1">{method.icon}</div>
-              <h3 className="font-medium text-cyan-300 mb-1">{method.name}</h3>
-              <span className="text-white text-sm break-all">
-                {method.value}
-              </span>
-            </Link>
+            <MagicCard className="p-6 rounded-2xl bg-card-bg/40 backdrop-blur-md border border-card-border hover:border-primary/50 transition-all duration-300 flex flex-col items-center group shadow-xl h-full w-full">
+              <Link
+                href={method.href}
+                target="_blank"
+                className="flex flex-col items-center gap-3 w-full h-full relative z-10 py-4"
+              >
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                  {method.icon}
+                </div>
+                <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">{method.name}</h3>
+                <span className="text-secondary text-xs break-all text-center">
+                  {method.value}
+                </span>
+              </Link>
+            </MagicCard>
           </motion.div>
         ))}
       </div>

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Montserrat, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
-import SpaceBackground from "../components/SpaceBackground";
+import MeteorBackground from "../components/MeteorBackground";
 import Footer from "../components/Footer";
+import { Providers } from "./providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -29,15 +30,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased bg-black min-h-screen`}
+        className={`${montserrat.variable} ${geistMono.variable} antialiased min-h-screen`}
         style={{
           fontFamily: "var(--font-montserrat), Arial, Helvetica, sans-serif",
         }}
       >
-        <SpaceBackground />
-        <Navbar />
-        <div className="pt-16 pb-16 min-h-screen">{children}</div>
-        <Footer />
+        <Providers>
+          <MeteorBackground />
+          <Navbar />
+          <div className="pt-16 pb-16 min-h-screen relative z-10">{children}</div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

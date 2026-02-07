@@ -4,49 +4,18 @@ import * as FaIcons from "react-icons/fa";
 import * as SiIcons from "react-icons/si";
 import * as GiIcons from "react-icons/gi";
 import { motion } from "framer-motion";
-import { useRef } from "react";
-import React from "react";
+import MagicCard from "@/components/ui/MagicCard";
+import MagneticWrapper from "@/components/ui/MagneticWrapper";
 
-const iconMap: Record<string, React.ElementType> = {
+type IconComponent = React.ComponentType<{ className?: string }>;
+
+const iconMap: Record<string, IconComponent> = {
   ...FaIcons,
   ...SiIcons,
   ...GiIcons,
 };
 
-interface TiltCardProps {
-  children: React.ReactNode;
-}
-function TiltCard({ children }: TiltCardProps): React.ReactElement {
-  const ref = useRef<HTMLDivElement>(null);
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    const card = ref.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * 8; // max 8deg
-    const rotateY = ((x - centerX) / centerX) * -8;
-    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  }
-  function handleMouseLeave() {
-    const card = ref.current;
-    if (card)
-      card.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg)";
-  }
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.08, boxShadow: "0 4px 24px 0 #22d3ee33" }}
-      className="transition-transform duration-200"
-    >
-      {children}
-    </motion.div>
-  );
-}
+
 
 export default function Skills(): React.ReactElement {
   const technicalSkills = skills.filter((s) => s.type === "technical");
@@ -58,96 +27,96 @@ export default function Skills(): React.ReactElement {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      className="py-16 px-2 sm:px-4 max-w-6xl mx-auto bg-transparent"
+      className="py-16 px-4 max-w-6xl mx-auto bg-transparent min-h-screen"
     >
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-cyan-500">
-          Skills
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
+          Skills & Expertise
         </h2>
-        <p className="text-lg font-bold text-white max-w-2xl mx-auto">
-          Technologies and soft skills I work with
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto font-medium">
+          A comprehensive overview of my technical arsenal and professional capabilities.
         </p>
       </motion.div>
 
       {/* Technical Skills Section */}
-      <h3 className="text-xl sm:text-2xl font-bold text-cyan-400 mb-6 mt-8">
+      <h3 className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-8 mt-12 border-b border-cyan-500/30 pb-4 inline-block">
         Technical Skills
       </h3>
-      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6 mb-12">
+      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6 mb-16">
         {technicalSkills.map((skill, idx) => {
-          const Icon = iconMap[skill.icon];
+          const Icon = iconMap[skill.icon] as IconComponent;
           return (
-            <TiltCard key={skill.name}>
+            <MagicCard
+              key={skill.name}
+              className="rounded-2xl bg-white/5 dark:bg-card-bg/40 backdrop-blur-xl border border-white/10 dark:border-card-border/60 shadow-lg group h-40 w-full flex items-center justify-center relative overflow-hidden"
+            >
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.03 }}
-                className={`relative flex flex-col items-center justify-center p-4 rounded-2xl shadow-lg bg-white/80 hover:bg-white/90 transition-all min-h-[120px] min-w-[100px] group border border-transparent hover:border-cyan-300`}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className="p-4 flex flex-col items-center justify-center gap-4 h-full w-full relative z-10"
               >
-                <motion.div
-                  whileHover={{ scale: 1.18, rotate: [0, 10, -10, 0] }}
-                  className={`mb-2 text-3xl sm:text-4xl ${skill.color}`}
-                >
-                  {Icon &&
-                    ([
-                      "SiNextdotjs",
-                      "FaGithub",
-                      "SiVercel",
-                      "SiExpress",
-                      "SiShadcnui",
-                    ].includes(skill.icon) ? (
-                      <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black">
-                        <Icon
-                          className={skill.color + " text-2xl sm:text-3xl"}
-                        />
-                      </span>
-                    ) : (
-                      <Icon />
-                    ))}
-                </motion.div>
-                <h4 className="font-semibold text-gray-900 text-center text-xs sm:text-sm">
+                <MagneticWrapper strength={0.5} className="z-20">
+                  <div className="p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:bg-white/10">
+                    <div className={`text-4xl transition-all duration-300 group-hover:scale-110 drop-shadow-md`}>
+                      {Icon &&
+                        (["SiNextdotjs", "FaGithub", "SiVercel", "SiExpress", "SiShadcnui"].includes(skill.icon) ? (
+                          <Icon className={`${skill.color}`} />
+                        ) : (
+                          <div className={skill.color}>
+                            <Icon />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </MagneticWrapper>
+                <h4 className="font-bold text-gray-200 group-hover:text-cyan-400 transition-colors text-center text-sm sm:text-base z-10 relative mt-2">
                   {skill.name}
                 </h4>
               </motion.div>
-            </TiltCard>
+            </MagicCard>
           );
         })}
       </div>
 
       {/* Soft Skills Section */}
-      <h3 className="text-xl sm:text-2xl font-bold text-cyan-400 mb-6 mt-8">
+      <h3 className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-8 mt-4 border-b border-cyan-500/30 pb-4 inline-block">
         Soft Skills
       </h3>
-      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6">
         {softSkills.map((skill, idx) => {
-          const Icon = iconMap[skill.icon];
+          const Icon = iconMap[skill.icon] as IconComponent;
           return (
-            <TiltCard key={skill.name}>
+            <MagicCard
+              key={skill.name}
+              className="rounded-2xl bg-white/5 dark:bg-card-bg/40 backdrop-blur-xl border border-white/10 dark:border-card-border/60 shadow-lg group h-40 w-full flex items-center justify-center relative overflow-hidden"
+            >
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.03 }}
-                className={`relative flex flex-col items-center justify-center p-4 rounded-2xl shadow-lg bg-white/80 hover:bg-white/90 transition-all min-h-[120px] min-w-[100px] group border border-transparent hover:border-cyan-300`}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className="p-4 flex flex-col items-center justify-center gap-4 h-full w-full relative z-10"
               >
-                <motion.div
-                  whileHover={{ scale: 1.18, rotate: [0, 10, -10, 0] }}
-                  className={`mb-2 text-3xl sm:text-4xl ${skill.color}`}
-                >
-                  {Icon && <Icon />}
-                </motion.div>
-                <h4 className="font-semibold text-gray-900 text-center text-xs sm:text-sm">
+                <MagneticWrapper strength={0.5} className="z-20">
+                  <div className="p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/10 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:bg-white/10">
+                    <div className={`text-4xl ${skill.color} transition-all duration-300 group-hover:scale-110 drop-shadow-md`}>
+                      {Icon && <Icon />}
+                    </div>
+                  </div>
+                </MagneticWrapper>
+                <h4 className="font-bold text-gray-200 group-hover:text-cyan-400 transition-colors text-center text-sm sm:text-base z-10 relative mt-2">
                   {skill.name}
                 </h4>
               </motion.div>
-            </TiltCard>
+            </MagicCard>
           );
         })}
       </div>

@@ -7,6 +7,7 @@ import { FaGithub, FaLinkedin, FaPhoneAlt } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { MdEmail } from "react-icons/md";
 import { GoLocation } from "react-icons/go";
+import MagicCard from "@/components/ui/MagicCard";
 
 export default function AboutPage() {
   return (
@@ -217,35 +218,37 @@ export default function AboutPage() {
                   <Link
                     key={project.id}
                     href={`/projects/${project.id}`}
-                    className="flex flex-col items-center bg-gray-900/80 rounded-xl border-2 border-cyan-400 shadow-lg p-4 w-full max-w-xs transition-transform hover:scale-105 hover:shadow-cyan-400/40 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                    className="w-full max-w-xs group"
                   >
-                    <Image
-                      src={project.imagePath}
-                      alt={project.title}
-                      width={220}
-                      height={140}
-                      className="rounded-lg border border-cyan-300 shadow mb-3 object-cover"
-                      priority={idx === 0}
-                    />
-                    <h3 className="text-xl font-bold text-cyan-200 mb-1 text-center">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-200 text-sm mb-2 text-center">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-2 justify-center">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs px-2 py-1 rounded-full bg-cyan-800 text-cyan-100 border border-cyan-400"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="mt-2 text-cyan-300 text-sm font-semibold flex items-center gap-1">
-                      View Details <FiExternalLink />
-                    </span>
+                    <MagicCard className="flex flex-col items-center bg-gray-900/80 rounded-xl border border-cyan-400/30 shadow-lg p-4 w-full h-full transition-all group-hover:scale-105 group-hover:shadow-cyan-400/40">
+                      <Image
+                        src={project.imagePath}
+                        alt={project.title}
+                        width={220}
+                        height={140}
+                        className="rounded-lg border border-cyan-300/50 shadow mb-3 object-cover group-hover:border-cyan-300 transition-colors"
+                        priority={idx === 0}
+                      />
+                      <h3 className="text-xl font-bold text-cyan-200 mb-1 text-center group-hover:text-cyan-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-200 text-sm mb-2 text-center line-clamp-2">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-2 justify-center">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs px-2 py-1 rounded-full bg-cyan-800/40 text-cyan-100 border border-cyan-400/30 group-hover:border-cyan-400/60 transition-colors"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <span className="mt-auto pt-2 text-cyan-300 text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                        View Details <FiExternalLink />
+                      </span>
+                    </MagicCard>
                   </Link>
                 )
               )}
@@ -274,7 +277,7 @@ export default function AboutPage() {
               ].map((cert) => (
                 <div
                   key={cert}
-                  className="bg-cyan-900/30 rounded-lg p-4 border border-cyan-700 text-cyan-100 text-sm shadow flex items-center"
+                  className="bg-cyan-900/30 rounded-lg p-4 border border-cyan-700/50 hover:border-cyan-500 text-cyan-100 text-sm shadow flex items-center transition-colors hover:bg-cyan-900/40"
                 >
                   {cert}
                 </div>

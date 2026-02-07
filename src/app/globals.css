@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Premium Blue/Cyan Theme - Enforced Dark Mode for 3D Background */
+  --background: #000000;
+  --foreground: #f8fafc;
+  /* Slate-50 */
+
+  /* Primary: Bright Electric Blue */
+  --primary: #38bdf8;
+  /* Sky-400 */
+  /* Secondary: Neon Indigo */
+  --secondary: #818cf8;
+  /* Indigo-400 */
+  /* Accent: Fluorescent Cyan */
+  --accent: #22d3ee;
+  /* Cyan-400 */
+
+  /* Cards/Surfaces */
+  --card-bg: rgba(15, 23, 42, 0.6);
+  /* Slate-900/60 */
+  --card-border: #1e293b;
+  /* Slate-800 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  /* Deep Space Theme - Dark Mode */
+  --background: #000000;
+  --foreground: #f8fafc;
+  /* Slate-50 */
+
+  /* Primary: Bright Electric Blue */
+  --primary: #38bdf8;
+  /* Sky-400 */
+  /* Secondary: Neon Indigo */
+  --secondary: #818cf8;
+  /* Indigo-400 */
+  /* Accent: Fluorescent Cyan */
+  --accent: #22d3ee;
+  /* Cyan-400 */
+
+  /* Cards/Surfaces */
+  --card-bg: rgba(15, 23, 42, 0.6);
+  /* Slate-900/60 */
+  --card-border: #1e293b;
+  /* Slate-800 */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

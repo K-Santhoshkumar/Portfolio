@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiPhone, FiGithub, FiLinkedin } from "react-icons/fi";
+import MagicCard from "@/components/ui/MagicCard";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -80,32 +81,38 @@ export default function ContactPage() {
         className="text-center mb-10"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {contactMethods.map((method, index) => (
-            <motion.div
-              key={method.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.03 }}
-              className="p-6 rounded-xl bg-gray-800/70 shadow-sm hover:shadow-md transition-all border border-gray-700 flex flex-col items-center"
-            >
-              <a
-                href={method.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-2"
-                aria-label={method.name}
+
+          {
+            contactMethods.map((method, index) => (
+              <motion.div
+                key={method.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.03 }}
+                className="h-full"
               >
-                <div className="mb-1">{method.icon}</div>
-                <h3 className="font-medium text-cyan-300 mb-1">
-                  {method.name}
-                </h3>
-                <span className="text-white text-sm break-all">
-                  {method.value}
-                </span>
-              </a>
-            </motion.div>
-          ))}
+                <MagicCard className="p-6 rounded-xl bg-gray-800/70 shadow-sm hover:shadow-md transition-all border border-gray-700 flex flex-col items-center h-full w-full group">
+                  <a
+                    href={method.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 w-full h-full relative z-10"
+                    aria-label={method.name}
+                  >
+                    <div className="mb-1 p-3 rounded-full bg-cyan-500/10 group-hover:scale-110 transition-transform duration-300">{method.icon}</div>
+                    <h3 className="font-medium text-cyan-300 mb-1 group-hover:text-cyan-200 transition-colors">
+                      {method.name}
+                    </h3>
+                    <span className="text-white text-sm break-all text-center">
+                      {method.value}
+                    </span>
+                  </a>
+                </MagicCard>
+              </motion.div>
+            ))
+          }
+
         </div>
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">
           Contact Me
@@ -122,6 +129,7 @@ export default function ContactPage() {
         className="bg-gray-800/70 rounded-xl p-8 shadow-lg border border-gray-700 flex flex-col gap-4"
       >
         <input
+          suppressHydrationWarning
           type="text"
           name="name"
           placeholder="Your Name"
@@ -131,6 +139,7 @@ export default function ContactPage() {
           className="px-4 py-2 rounded-md bg-gray-900 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
         <input
+          suppressHydrationWarning
           type="email"
           name="email"
           placeholder="Your Email"
@@ -140,6 +149,7 @@ export default function ContactPage() {
           className="px-4 py-2 rounded-md bg-gray-900 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
         <textarea
+          suppressHydrationWarning
           name="message"
           placeholder="Your Message"
           value={form.message}
@@ -149,6 +159,7 @@ export default function ContactPage() {
           className="px-4 py-2 rounded-md bg-gray-900 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
         <button
+          suppressHydrationWarning
           type="submit"
           disabled={loading}
           className="px-8 py-3 font-medium rounded-md bg-cyan-500 hover:bg-cyan-600 text-white transition-colors text-lg shadow-lg disabled:opacity-60"
@@ -157,9 +168,8 @@ export default function ContactPage() {
         </button>
         {status.message && (
           <div
-            className={`text-center mt-2 ${
-              status.type === "success" ? "text-green-400" : "text-red-400"
-            }`}
+            className={`text-center mt-2 ${status.type === "success" ? "text-green-400" : "text-red-400"
+              }`}
           >
             {status.message}
           </div>

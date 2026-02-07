@@ -1,58 +1,37 @@
 "use client";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Link from "next/link";
+import HolographicImage from "./HolographicImage";
 
 export default function AboutSection() {
   return (
     <section
       id="about"
-      className="max-w-3xl mx-auto py-20 px-4 text-white flex flex-col items-center text-center relative z-10"
+      className="max-w-4xl mx-auto py-24 px-4 flex flex-col items-center text-center relative z-10"
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7 }}
-        viewport={{ once: true }}
-        className="mb-6"
-      >
-        <Image
-          src="/portfolio_logo.png"
-          alt="Santhoshkumar Logo"
-          width={100}
-          height={100}
-          className="rounded-full border-4 border-cyan-400 shadow-lg mx-auto"
-          priority
-        />
-      </motion.div>
-      <motion.h2
-        className="text-3xl font-bold mb-4 text-cyan-400"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.5 }}
         viewport={{ once: true }}
+        className="backdrop-blur-xl bg-card-bg/80 border border-card-border p-8 md:p-12 rounded-3xl shadow-xl z-20 relative"
       >
-        About Me
-      </motion.h2>
-      <motion.p
-        className="mb-8 text-lg text-gray-200 max-w-xl mx-auto"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        Full Stack Web Developer skilled in front-end, back-end, and database
-        integration, with a passion for building interactive and responsive web
-        applications.
-      </motion.p>
-      <motion.a
-        href="/Santhosh.pdf"
-        download
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.97 }}
-        className="inline-block px-8 py-3 rounded-full bg-cyan-500 hover:bg-cyan-600 text-white font-semibold shadow-lg transition-colors text-lg mb-4"
-      >
-        Download Resume
-      </motion.a>
+        <div className="mb-8 inline-block">
+          <HolographicImage />
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+          About Me
+        </h2>
+        <p className="mb-10 text-lg md:text-xl text-foreground dark:text-gray-200 max-w-2xl mx-auto font-bold leading-relaxed">
+          I am a Full Stack Web Developer based in India, specializing in React, Next.js, and Python. I love building tools that are not only functional but also beautiful and easy to use.
+        </p>
+        <Link
+          href="/Santhosh.pdf"
+          className="inline-block px-10 py-4 rounded-full bg-secondary/10 hover:bg-secondary/20 text-foreground font-bold border border-card-border backdrop-blur-md transition-all active:scale-95"
+        >
+          Download Resume
+        </Link>
+      </motion.div>
     </section>
   );
 }
