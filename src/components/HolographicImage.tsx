@@ -20,7 +20,13 @@ export default function HolographicImage() {
                 <div className="absolute inset-0 rounded-full mix-blend-screen opacity-0 group-hover:opacity-70 animate-pulse delay-75 pointer-events-none -translate-x-[2px] bg-blue-500/20 z-10" />
 
                 {/* Scanline */}
-                <div className="absolute inset-0 z-20 pointer-events-none bg-[url('/scanline.png')] opacity-0 group-hover:opacity-20 animate-scan" style={{ backgroundSize: '100% 4px' }} />
+                <div
+                    className="absolute inset-0 z-20 pointer-events-none opacity-0 group-hover:opacity-20 animate-scan"
+                    style={{
+                        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.5) 2px, rgba(0, 0, 0, 0.5) 4px)',
+                        backgroundSize: '100% 4px'
+                    }}
+                />
 
                 <Image
                     src="/portfolio_logo.png"

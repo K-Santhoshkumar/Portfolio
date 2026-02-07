@@ -1,10 +1,9 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import { projects, Project } from "../../data/projects";
 import Image from "next/image";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import GlareCard from "@/components/ui/GlareCard";
 import { motion } from "framer-motion";
 
 function isValidImagePath(path: string): boolean {
@@ -49,165 +48,128 @@ const tagColors = {
 };
 
 export default function Projects() {
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <section id="projects" className="py-20 px-4 max-w-5xl mx-auto">
+        <div className="h-20 w-1/3 mx-auto bg-gray-200/10 rounded animate-pulse mb-16" />
+        <div className="space-y-12 opacity-0">
+          <div className="h-64 bg-gray-200/10 rounded-3xl" />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="projects"
-      className="py-20 px-4 max-w-6xl mx-auto bg-transparent"
+      className="py-20 px-4 max-w-5xl mx-auto bg-transparent"
     >
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-20"
+      >
+        <h2 className="text-4xl md:text-6xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary tracking-tighter">
           Projects
         </h2>
-        <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-xl text-foreground/80 dark:text-gray-300 max-w-2xl mx-auto font-medium">
           Explore my work. Click a project for details.
         </p>
-      </div>
-      {/* Slider for mobile, grid for desktop */}
-      {isMobile ? (
-        <motion.div
-          className="flex gap-6 overflow-x-auto pb-4 -mx-4 px-2 snap-x snap-mandatory"
-          drag="x"
-          dragConstraints={{ left: -300 * (projects.length - 1), right: 0 }}
-          whileTap={{ cursor: "grabbing" }}
-        >
-          {projects.map((project: Project, idx: number) => {
-            const imagePath = project.imagePath;
-            return (
-              <Link
-                key={project.id}
-                href={`/projects/${project.id}`}
-                className="min-w-[90vw] max-w-xs group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all border border-gray-200 dark:border-gray-700 text-left focus:outline-none focus:ring-2 focus:ring-cyan-400 snap-center mx-2"
-                tabIndex={0}
-                aria-label={`View details for ${project.title}`}
-              >
-                <motion.div
-                  initial={{ opacity: 0, x: 60 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  whileHover={{
-                    scale: 1.04,
-                    boxShadow: "0 8px 32px 0 rgba(0,0,0,0.10)",
-                  }}
-                  className="transition-transform duration-300"
-                >
-                  <div className="relative h-48 w-full">
-                    {isValidImagePath(imagePath) ? (
-                      <Image
-                        src={imagePath}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                          const parent = e.currentTarget
-                            .parentNode as HTMLElement | null;
-                          if (parent) {
-                            const fallback =
-                              parent.querySelector(".fallback-img");
-                            fallback?.classList.remove("hidden");
-                          }
-                        }}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        priority={idx === 0}
-                      />
-                    ) : null}
-                    <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black text-white text-center text-base font-semibold hidden">
-                      {project.title}
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 mb-3 line-clamp-2 min-h-[40px]">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={`text-xs px-2 py-1 rounded-full border border-gray-200 font-medium ${tagColors[tag as keyof typeof tagColors] ||
-                            "bg-gray-100 text-gray-700"
-                            }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
-            );
-          })}
-        </motion.div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project: Project) => {
-            const imagePath = project.imagePath;
-            return (
-              <GlareCard
-                key={project.id}
-                className="rounded-3xl bg-card-bg/80 backdrop-blur-xl border-card-border/60 shadow-xl group"
-              >
-                <div className="relative h-full flex flex-col">
-                  <div className="relative h-64 w-full overflow-hidden rounded-t-3xl">
-                    {isValidImagePath(imagePath) ? (
-                      <Image
-                        src={imagePath}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                          const parent = e.currentTarget.parentNode as HTMLElement | null;
-                          if (parent) {
-                            const fallback = parent.querySelector(".fallback-img");
-                            fallback?.classList.remove("hidden");
-                          }
-                        }}
-                      />
-                    ) : null}
-                    <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black text-white text-center text-base font-semibold hidden">
-                      {project.title}
-                    </div>
+      </motion.div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex items-end p-6">
-                      <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300 w-full flex justify-between items-center">
-                        <span className="font-bold text-lg text-primary">View Project</span>
-                        <FiExternalLink className="text-primary" size={24} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-8 flex-grow">
-                    <h3 className="text-2xl font-bold mb-3 text-foreground dark:text-white group-hover:text-primary transition-colors">{project.title}</h3>
-                    <p className="text-foreground/80 dark:text-gray-400 text-sm mb-6 line-clamp-2 leading-relaxed font-medium">{project.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.tags.map((tech) => (
-                        <span key={tech} className={`text-[10px] uppercase font-bold px-3 py-1.5 rounded-full border border-secondary/20 ${tagColors[tech as keyof typeof tagColors] || "bg-secondary/5 text-secondary"}`}>
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex gap-4">
-                      <Link href={`/projects/${project.id}`} className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-foreground text-background font-bold hover:bg-primary hover:text-white transition-all shadow-md z-20 relative">
-                        <FaGithub size={18} /> Details
-                      </Link>
-                      {project.demoUrl && (
-                        <Link href={project.demoUrl} target="_blank" className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-card-border font-bold hover:border-primary hover:text-primary transition-all z-20 relative">
-                          <FiExternalLink size={18} /> Demo
-                        </Link>
-                      )}
-                    </div>
-                  </div>
+      <div className="flex flex-col gap-16 md:gap-24">
+        {projects.map((project: Project, index: number) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: index * 0.1 }}
+            className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-8 md:gap-12 items-center group`}
+          >
+            {/* Project Image */}
+            <div className="w-full md:w-1/2 relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-primary/50 transition-colors duration-500">
+              <Link href={`/projects/${project.id}`} className="block h-full w-full relative">
+                {isValidImagePath(project.imagePath) ? (
+                  <Image
+                    src={project.imagePath}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      const parent = e.currentTarget.parentNode as HTMLElement | null;
+                      if (parent) {
+                        const fallback = parent.querySelector(".fallback-img");
+                        fallback?.classList.remove("hidden");
+                      }
+                    }}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={index < 2}
+                  />
+                ) : null}
+                <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm text-white text-center text-base font-semibold hidden">
+                  {project.title}
                 </div>
-              </GlareCard>
-            );
-          })}
-        </div>
-      )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                  <span className="text-white font-bold flex items-center gap-2">
+                    View Project <FiExternalLink />
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Project Info */}
+            <div className="w-full md:w-1/2 flex flex-col space-y-6">
+              <div className="space-y-2">
+                <span className="text-primary font-mono text-sm tracking-widest uppercase font-bold">Project 0{index + 1}</span>
+                <Link href={`/projects/${project.id}`}>
+                  <h3 className="text-3xl md:text-4xl font-bold hover:text-primary transition-colors cursor-pointer">
+                    {project.title}
+                  </h3>
+                </Link>
+              </div>
+
+              <p className="text-lg text-foreground/70 dark:text-gray-300 leading-relaxed font-medium">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className={`text-[10px] uppercase font-bold px-3 py-1.5 rounded-full border border-white/5 ${tagColors[tag as keyof typeof tagColors] ||
+                      "bg-white/5 text-gray-400"
+                      }`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-6 pt-4">
+                <Link href={`/projects/${project.id}`} className="flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors font-bold group/link underline underline-offset-8">
+                  <span>Full details</span>
+                  <FiExternalLink size={20} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                </Link>
+                {project.demoUrl && (
+                  <Link href={project.demoUrl} target="_blank" className="flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors font-bold group/link">
+                    <FiExternalLink size={24} className="group-hover/link:scale-110 transition-transform" />
+                    <span>Live Demo</span>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 }

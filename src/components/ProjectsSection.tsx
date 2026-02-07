@@ -1,124 +1,121 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { projects, Project } from "../data/projects";
-import GlareCard from "@/components/ui/GlareCard";
 
 const DUMMY_IMAGE = "https://placehold.co/600x400?text=Project";
 
 export default function ProjectsSection(): React.ReactElement {
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <section id="projects" className="py-20 px-4 max-w-5xl mx-auto">
+        <div className="h-20 w-1/3 mx-auto bg-gray-200/10 rounded animate-pulse mb-16" />
+        <div className="space-y-12 opacity-0">
+          <div className="h-64 bg-gray-200/10 rounded-3xl" />
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section id="projects" className="py-20 px-4 max-w-7xl mx-auto text-foreground">
+    <section id="projects" className="py-20 px-4 max-w-5xl mx-auto text-foreground">
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-16"
+        className="text-center mb-20"
       >
-        <h2 className="text-3xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary">
+        <h2 className="text-4xl md:text-6xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary tracking-tighter">
           Featured Projects
         </h2>
-        <p className="text-lg text-foreground dark:text-gray-300 max-w-2xl mx-auto font-medium">
+        <p className="text-xl text-foreground/80 dark:text-gray-300 max-w-2xl mx-auto font-medium">
           A selection of my recent works and technical contributions.
         </p>
       </motion.div>
-      {isMobile ? (
-        <div className="flex gap-6 overflow-x-auto pb-8 snap-x scrollbar-hide">
-          {projects.slice(0, 3).map((project: Project, index: number) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="min-w-[300px] snap-center rounded-2xl overflow-hidden bg-card-bg/90 backdrop-blur-md border border-card-border shadow-xl"
-            >
-              <div className="relative h-48 w-full">
+
+      <div className="flex flex-col gap-16 md:gap-24">
+        {projects.slice(0, 3).map((project: Project, index: number) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: index * 0.1 }}
+            className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-8 md:gap-12 items-center group`}
+          >
+            {/* Project Image */}
+            <div className="w-full md:w-1/2 relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-primary/50 transition-colors duration-500">
+              <Link href={`/projects/${project.id}`} className="block h-full w-full relative">
                 <Image
                   src={project.imagePath}
                   alt={project.title}
                   fill
-                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = DUMMY_IMAGE;
                   }}
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                  <span className="text-white font-bold flex items-center gap-2">
+                    View Case Study <FiExternalLink />
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Project Info */}
+            <div className="w-full md:w-1/2 flex flex-col space-y-6">
+              <div className="space-y-2">
+                <span className="text-primary font-mono text-sm tracking-widest uppercase font-bold">Project 0{index + 1}</span>
+                <Link href={`/projects/${project.id}`}>
+                  <h3 className="text-3xl md:text-4xl font-bold hover:text-primary transition-colors cursor-pointer">
+                    {project.title}
+                  </h3>
+                </Link>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-foreground">{project.title}</h3>
-                <p className="text-foreground/70 text-sm mb-4 line-clamp-3">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tech) => (
-                    <span key={tech} className="text-[10px] uppercase font-bold px-2 py-1 rounded bg-primary/10 text-primary border border-primary/20">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-4">
-                  <Link href={project.githubUrl} target="_blank" className="p-2 rounded-full border border-card-border hover:bg-primary/10 text-foreground transition-colors"><FaGithub size={20} /></Link>
-                  {project.demoUrl && <Link href={project.demoUrl} target="_blank" className="p-2 rounded-full border border-card-border hover:bg-primary/10 text-foreground transition-colors"><FiExternalLink size={20} /></Link>}
-                </div>
+
+              <p className="text-lg text-foreground/70 leading-relaxed font-medium">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tech) => (
+                  <span key={tech} className="text-xs uppercase font-bold px-3 py-1.5 rounded-full bg-primary/5 text-primary border border-primary/20 backdrop-blur-sm">
+                    {tech}
+                  </span>
+                ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.slice(0, 3).map((project: Project) => (
-            <GlareCard
-              key={project.id}
-              className="rounded-3xl bg-card-bg/80 backdrop-blur-xl border-card-border/60 shadow-xl group"
-            >
-              <div className="relative h-full flex flex-col">
-                <div className="relative h-64 w-full overflow-hidden rounded-t-3xl">
-                  <Image
-                    src={project.imagePath}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = DUMMY_IMAGE;
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-300 flex items-end p-6">
-                    <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-300 w-full flex justify-between items-center">
-                      <span className="font-bold text-lg text-primary">View Project</span>
-                      <FiExternalLink className="text-primary" size={24} />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-8 flex-grow">
-                  <h3 className="text-2xl font-bold mb-3 text-foreground dark:text-white group-hover:text-primary transition-colors">{project.title}</h3>
-                  <p className="text-foreground/80 dark:text-gray-400 text-sm mb-6 line-clamp-2 leading-relaxed font-medium">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tags.map((tech) => (
-                      <span key={tech} className="text-[10px] uppercase font-bold px-3 py-1.5 rounded-full bg-secondary/5 text-secondary border border-secondary/20">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-4">
-                    <Link href={project.githubUrl} target="_blank" className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-foreground text-background font-bold hover:bg-primary hover:text-white transition-all shadow-md z-20 relative">
-                      <FaGithub size={18} /> Code
-                    </Link>
-                    {project.demoUrl && (
-                      <Link href={project.demoUrl} target="_blank" className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-full border border-card-border font-bold hover:border-primary hover:text-primary transition-all z-20 relative">
-                        <FiExternalLink size={18} /> Demo
-                      </Link>
-                    )}
-                  </div>
-                </div>
+
+              <div className="flex items-center gap-6 pt-4">
+                <Link href={project.githubUrl} target="_blank" className="flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors font-bold group/link">
+                  <FaGithub size={24} className="group-hover/link:scale-110 transition-transform" />
+                  <span>Code</span>
+                </Link>
+                {project.demoUrl && (
+                  <Link href={project.demoUrl} target="_blank" className="flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors font-bold group/link">
+                    <FiExternalLink size={24} className="group-hover/link:scale-110 transition-transform" />
+                    <span>Live Demo</span>
+                  </Link>
+                )}
+                <Link href={`/projects/${project.id}`} className="ml-auto inline-flex items-center justify-center p-3 rounded-full bg-primary text-black hover:scale-110 transition-transform shadow-lg shadow-primary/20">
+                  <FiExternalLink size={20} />
+                </Link>
               </div>
-            </GlareCard>
-          ))}
-        </div>
-      )}
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 }

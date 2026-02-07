@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { skills } from "../../data/skills";
 import * as FaIcons from "react-icons/fa";
 import * as SiIcons from "react-icons/si";
