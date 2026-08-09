@@ -7,6 +7,16 @@ import { Briefcase, Building2, Code2 } from "lucide-react";
 
 const experiences = [
     {
+        role: "Software Engineer",
+        company: "NMSWorks Software Private Limited",
+        date: "April 2026 – Present",
+        description: [
+            "Engineered scalable network management and orchestration systems for enterprise telecommunications infrastructure.",
+            "Designed high-performance backend modules utilizing Java, Spring Boot, Kafka messaging queues, and Docker microservices."
+        ],
+        techStack: ["Java", "Spring Boot", "Kafka", "Docker", "Linux", "REST APIs", "PostgreSQL"]
+    },
+    {
         role: "Software Development Intern",
         company: "GoalStox, Mumbai",
         date: "Nov 2025 – Feb 2026",
@@ -18,15 +28,22 @@ const experiences = [
     },
     {
         role: "AIML Intern",
+
         company: "CubeAI Solutions",
         date: "June – July 2025",
         description: [
+
             "Developed an AI-driven Rainfall Prediction System using Python and Streamlit, enabling interactive meteorological data input and real-time forecast generation.",
+
             "Implemented a Random Forest classifier with GridSearchCV for hyper-parameter tuning to enhance model accuracy and reliability, delivering an intuitive interface for both prediction and visualization of rainfall patterns."
         ],
         techStack: ["Streamlit", "Python", "NumPy", "Pandas", "Matplotlib", "Seaborn"]
     }
 ];
+
+
+
+
 
 export default function ExperiencePage() {
     return (

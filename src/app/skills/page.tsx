@@ -68,7 +68,8 @@ export default function Skills(): React.ReactElement {
                   className="p-3 flex flex-col items-center justify-center gap-3 h-full w-full relative z-10"
                 >
                   <MagneticWrapper strength={0.5} className="z-20">
-                    <div className="p-3 rounded-xl bg-slate-950 border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
+                    <div className="p-3 rounded-xl bg-slate-950 skill-icon-bg border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
+
                       <div className="text-3xl transition-all duration-300 group-hover:scale-110 drop-shadow-md">
                         {Icon &&
                           (["SiNextdotjs", "FaGithub", "SiVercel", "SiExpress", "SiShadcnui", "SiSpringboot", "FaDocker", "SiGithubactions", "SiApachekafka", "FaLinux"].includes(skill.icon) ? (
@@ -111,11 +112,12 @@ export default function Skills(): React.ReactElement {
                   className="p-3 flex flex-col items-center justify-center gap-3 h-full w-full relative z-10"
                 >
                   <MagneticWrapper strength={0.5} className="z-20">
-                    <div className="p-3 rounded-xl bg-slate-950 border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
+                    <div className="p-3 rounded-xl bg-slate-950 skill-icon-bg border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
                       <div className={`text-3xl ${skill.color} transition-all duration-300 group-hover:scale-110 drop-shadow-md`}>
                         {Icon && <Icon />}
                       </div>
                     </div>
+
                   </MagneticWrapper>
                   <h4 className="font-mono font-bold text-slate-200 group-hover:text-cyan-300 transition-colors text-center text-xs z-10 relative">
                     {skill.name}

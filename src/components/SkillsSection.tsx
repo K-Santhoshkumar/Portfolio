@@ -73,7 +73,8 @@ export default function SkillsSection(): React.ReactElement {
                 className="p-6 flex flex-col items-center justify-center gap-4 h-full w-full"
               >
                 <MagneticWrapper strength={0.5} className="z-20">
-                  <div className="p-4 rounded-full bg-slate-950 border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
+                  <div className="p-4 rounded-full bg-slate-950 skill-icon-bg border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
+
                     {React.cloneElement(skill.icon as React.ReactElement<{ size?: number; className?: string }>, { size: 32, className: (skill.icon as React.ReactElement<{ className?: string }>).props.className })}
                   </div>
                 </MagneticWrapper>

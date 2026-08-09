@@ -64,3 +64,76 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Native High-Contrast Cyber Day Light Mode Theme */
+html.cyber-light-mode {
+  --background: #f1f5f9;
+  --foreground: #0f172a;
+}
+
+html.cyber-light-mode body {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+html.cyber-light-mode .bg-slate-950,
+html.cyber-light-mode .bg-slate-900,
+html.cyber-light-mode .bg-slate-950\/85,
+html.cyber-light-mode .bg-slate-950\/90,
+html.cyber-light-mode .bg-slate-900\/80,
+html.cyber-light-mode .bg-slate-900\/70,
+html.cyber-light-mode .bg-slate-900\/60,
+html.cyber-light-mode .bg-slate-900\/90 {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  color: #0f172a !important;
+  border-color: rgba(2, 132, 199, 0.35) !important;
+  box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1), 0 8px 10px -6px rgba(2, 132, 199, 0.05) !important;
+}
+
+html.cyber-light-mode .text-slate-100,
+html.cyber-light-mode .text-slate-200,
+html.cyber-light-mode .text-slate-300 {
+  color: #0f172a !important;
+}
+
+html.cyber-light-mode .text-slate-400 {
+  color: #334155 !important;
+}
+
+html.cyber-light-mode .text-cyan-300,
+html.cyber-light-mode .text-cyan-400 {
+  color: #0284c7 !important;
+}
+
+html.cyber-light-mode .text-purple-300,
+html.cyber-light-mode .text-purple-400 {
+  color: #7e22ce !important;
+}
+
+html.cyber-light-mode .text-emerald-300,
+html.cyber-light-mode .text-emerald-400 {
+  color: #047857 !important;
+}
+
+html.cyber-light-mode .text-amber-300,
+html.cyber-light-mode .text-amber-400 {
+  color: #b45309 !important;
+}
+
+html.cyber-light-mode .border-cyan-500\/30,
+html.cyber-light-mode .border-cyan-500\/20,
+html.cyber-light-mode .border-cyan-500\/40,
+html.cyber-light-mode .border-white\/5,
+html.cyber-light-mode .border-white\/10 {
+  border-color: rgba(2, 132, 199, 0.35) !important;
+}
+
+/* Enforce Solid Black Background for Skill Icon Containers in Light Mode */
+html.cyber-light-mode .skill-icon-bg {
+  background-color: #020617 !important;
+  border-color: rgba(2, 132, 199, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+
+

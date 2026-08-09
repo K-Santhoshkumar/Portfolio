@@ -2,7 +2,8 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Menu, X, Cpu, Activity, Sun, ShieldCheck } from "lucide-react";
+import { Menu, X, Activity, Sun } from "lucide-react";
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -160,52 +161,47 @@ export default function Navbar(): React.ReactElement {
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="fixed top-0 w-full bg-slate-950/85 backdrop-blur-3xl z-50 border-b border-cyan-500/25 shadow-2xl shadow-cyan-950/50"
     >
-      {/* Top AI OS Telemetry & Status Ribbon */}
-      <div className="hidden lg:flex items-center justify-between px-6 py-1 bg-slate-900/90 border-b border-white/5 font-mono text-[10px] text-slate-400 select-none">
-        <div className="flex items-center gap-4">
+      {/* Top AI OS Telemetry & Status Ribbon (Visible on Mobile & Desktop) */}
+      <div className="flex items-center justify-between px-3 sm:px-6 py-1 bg-slate-900/90 border-b border-white/5 font-mono text-[9px] sm:text-[10px] text-slate-400 select-none overflow-x-auto no-scrollbar whitespace-nowrap gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
           <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
             <Activity className="w-3.5 h-3.5 animate-pulse" />
-            JARVIS_AI_OS::v4.5.0
+            JARVIS_AI_OS
           </span>
           <span className="text-slate-700">|</span>
-          <span className="text-emerald-400 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
-            NEURAL_LINK: 100%
+          <span className="text-emerald-400 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+            100%
           </span>
           <span className="text-slate-700">|</span>
           {/* Live Weather Widget */}
           <span className="text-amber-300 flex items-center gap-1">
-            <Sun className="w-3 h-3 text-amber-400" />
+            <Sun className="w-3 h-3 text-amber-400 shrink-0" />
             {weatherInfo}
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
-          {/* AI Audio Waveform Visualizer */}
-          <div className="flex items-center gap-0.5">
-            <span className="w-0.5 h-3 bg-cyan-400 animate-pulse" />
-            <span className="w-0.5 h-4 bg-purple-400 animate-pulse delay-75" />
-            <span className="w-0.5 h-2 bg-emerald-400 animate-pulse delay-150" />
-            <span className="w-0.5 h-3 bg-cyan-400 animate-pulse delay-100" />
-          </div>
-          <span className="text-slate-700">|</span>
-          <span className="flex items-center gap-1 text-purple-300">
-            <Cpu className="w-3 h-3 text-purple-400" />
-            CPU 14% | RAM 4.8GB
-          </span>
-          <span className="text-slate-700">|</span>
-          <span className="flex items-center gap-1 text-emerald-400">
-            <ShieldCheck className="w-3 h-3" />
-            SECURED
-          </span>
-          <span className="text-slate-700">|</span>
+        <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
           {/* Live Date & Time Widget (12-Hour Format) */}
           <span className="text-cyan-300 font-bold">
             {systemDate} {"//"} {systemTime || "12:00:00 PM"}
           </span>
+          <span className="text-slate-700">|</span>
 
+          {/* Cyber Mode Switcher Toggle Button */}
+          <button
+            onClick={() => {
+              document.documentElement.classList.toggle("cyber-light-mode");
+            }}
+            className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-400/40 text-cyan-300 font-mono font-bold text-[9px] sm:text-[10px] transition-all"
+            title="Toggle Cyber Light / Dark OS Mode"
+          >
+            <span className="text-amber-300">☀️ / 🌙</span>
+            <span className="hidden xs:inline">CYBER_MODE</span>
+          </button>
         </div>
       </div>
+
 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

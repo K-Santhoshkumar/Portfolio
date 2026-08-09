@@ -62,13 +62,13 @@ export const skills: SkillItem[] = [
   {
     name: "Express",
     icon: "SiExpress",
-    color: "text-gray-800 dark:text-gray-200",
+    color: "text-slate-900 dark:text-slate-100",
     type: "technical",
   },
   {
     name: "Mongoose",
     icon: "SiMongoose",
-    color: "text-red-700",
+    color: "text-red-700 dark:text-red-400",
     type: "technical",
   },
   { name: "Vite", icon: "SiVite", color: "text-yellow-400", type: "technical" },
@@ -90,32 +90,32 @@ export const skills: SkillItem[] = [
   {
     name: "Next.js",
     icon: "SiNextdotjs",
-    color: "text-black dark:text-white",
+    color: "text-slate-900 dark:text-slate-100",
     type: "technical",
   },
   {
     name: "Shadcn",
     icon: "SiShadcnui",
-    color: "text-gray-700 dark:text-gray-200",
+    color: "text-slate-900 dark:text-slate-100",
     type: "technical",
   },
   {
     name: "MongoDB",
     icon: "SiMongodb",
-    color: "text-green-700",
+    color: "text-green-600 dark:text-green-400",
     type: "technical",
   },
   { name: "MySQL", icon: "SiMysql", color: "text-blue-500", type: "technical" },
   {
     name: "PostgreSQL",
     icon: "SiPostgresql",
-    color: "text-blue-800",
+    color: "text-blue-600 dark:text-blue-400",
     type: "technical",
   },
   {
     name: "Prisma",
     icon: "SiPrisma",
-    color: "text-indigo-400",
+    color: "text-indigo-500 dark:text-indigo-400",
     type: "technical",
   },
   {
@@ -127,7 +127,7 @@ export const skills: SkillItem[] = [
   {
     name: "GitHub",
     icon: "FaGithub",
-    color: "text-black dark:text-white",
+    color: "text-slate-900 dark:text-slate-100",
     type: "technical",
   },
   {
@@ -139,33 +139,46 @@ export const skills: SkillItem[] = [
   {
     name: "MongoDB Atlas",
     icon: "SiMongodb",
-    color: "text-green-700",
+    color: "text-green-600 dark:text-green-400",
     type: "technical",
   },
   {
     name: "Netlify",
     icon: "SiNetlify",
-    color: "text-green-400",
+    color: "text-green-500 dark:text-green-400",
     type: "technical",
   },
   {
     name: "Vercel",
     icon: "SiVercel",
-    color: "text-black dark:text-white",
+    color: "text-slate-900 dark:text-slate-100",
     type: "technical",
   },
   // Additional Backend & DevOps Skills
   { name: "Spring Boot", icon: "SiSpringboot", color: "text-emerald-500", type: "technical" },
   { name: "Docker", icon: "FaDocker", color: "text-blue-400", type: "technical" },
   { name: "CI/CD", icon: "SiGithubactions", color: "text-blue-500", type: "technical" },
-  { name: "Kafka", icon: "SiApachekafka", color: "text-cyan-300", type: "technical" },
+  { name: "Kafka", icon: "SiApachekafka", color: "text-cyan-500 dark:text-cyan-300", type: "technical" },
   { name: "Linux", icon: "FaLinux", color: "text-yellow-500", type: "technical" },
-  { name: "Flask", icon: "SiFlask", color: "text-gray-400", type: "technical" },
+  { name: "Flask", icon: "SiFlask", color: "text-slate-800 dark:text-slate-200", type: "technical" },
+
   { name: "WebSockets", icon: "FaNetworkWired", color: "text-blue-500", type: "technical" },
   { name: "Django", icon: "SiDjango", color: "text-emerald-600", type: "technical" },
   { name: "FastAPI", icon: "SiFastapi", color: "text-teal-400", type: "technical" },
 
   // Soft Skills
+  {
+    name: "Communication",
+    icon: "GiTalk",
+    color: "text-cyan-400",
+    type: "soft",
+  },
+  {
+    name: "Analysis",
+    icon: "GiPieChart",
+    color: "text-purple-400",
+    type: "soft",
+  },
   {
     name: "Quick Learner",
     icon: "GiBrain",
@@ -185,4 +198,5 @@ export const skills: SkillItem[] = [
     type: "soft",
   },
 ];
+
 

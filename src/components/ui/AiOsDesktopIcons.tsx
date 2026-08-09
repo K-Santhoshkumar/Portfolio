@@ -25,7 +25,8 @@ export default function AiOsDesktopIcons(): React.ReactElement {
   ];
 
   return (
-    <div className="hidden xl:flex flex-col gap-6 fixed top-28 left-8 z-30 pointer-events-auto select-none">
+    <div className="hidden 2xl:flex flex-col gap-4 fixed top-24 left-6 z-30 pointer-events-auto select-none">
+
       {desktopShortcuts.map((shortcut, index) => {
         const Icon = shortcut.icon;
 

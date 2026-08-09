@@ -18,8 +18,9 @@ export default function AboutPage() {
           </div>
           <div>
             <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">Education</span>
-            <span className="text-sm font-mono font-bold text-slate-100">B.Tech IT (8.43)</span>
+            <span className="text-sm font-mono font-bold text-slate-100">B.Tech IT (8.41)</span>
           </div>
+
         </div>
 
         <div className="bg-slate-900/80 border border-purple-500/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl backdrop-blur-xl">
@@ -153,22 +154,14 @@ export default function AboutPage() {
                   <span className="bg-slate-950 border border-cyan-500/30 px-2.5 py-1 rounded-lg">Vercel</span>
                 </div>
               </div>
-              {/* Soft Skills */}
+              {/* Domain Interests */}
               <div className="bg-slate-900/80 border border-cyan-500/30 rounded-2xl p-4 w-full text-center">
                 <h3 className="text-cyan-300 font-mono font-semibold mb-2 text-sm">
-                  Soft Skills
+                  Domain Interests
                 </h3>
-                <div className="flex flex-wrap justify-center gap-1.5 text-xs text-emerald-300 font-mono">
-                  <span className="bg-slate-950 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
-                    Quick Learner
-                  </span>
-                  <span className="bg-slate-950 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
-                    Team Management
-                  </span>
-                  <span className="bg-slate-950 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
-                    Adaptability
-                  </span>
-                </div>
+                <p className="text-slate-200 text-xs leading-relaxed font-sans">
+                  Full stack web development with Java, Spring Boot, MERN stack, PHP, database integration and querying, Docker, Kafka, problem solving in Python & DSA.
+                </p>
               </div>
             </div>
           </AiOsWindow>
@@ -176,6 +169,7 @@ export default function AboutPage() {
 
         {/* Right: Details */}
         <div className="md:w-2/3 flex flex-col gap-6">
+
           {/* Personal Statement / Approach */}
           <AiOsWindow
             title="SYSTEM_APPROACH_MODULE"
@@ -197,10 +191,10 @@ export default function AboutPage() {
             </div>
           </AiOsWindow>
 
-          {/* Timeline for Education & Milestones */}
+          {/* Timeline for Education, Internships & Career Milestones */}
           <AiOsWindow
             title="MILESTONE_TIMELINE_DB"
-            command="cat /var/log/education_history.log"
+            command="cat /var/log/career_education_history.log"
             statusText="TIMELINE::VERIFIED"
             depth={25}
           >
@@ -210,25 +204,31 @@ export default function AboutPage() {
                 <li className="ml-4">
                   <div className="absolute w-3.5 h-3.5 bg-cyan-400 rounded-full -left-[7px] top-1.5 border-2 border-slate-950 animate-pulse" />
                   <div className="text-sm font-bold text-cyan-300 font-mono">
-                    2019 – 2020
+                    2026 April – Present
                   </div>
-                  <div className="text-slate-200 text-sm font-medium">
-                    10th Standard, Mangalam Higher Secondary School, Erode
+                  <div className="text-slate-100 text-sm font-bold">
+                    Software Engineer at NMSWorks Software Private Limited
                   </div>
-                  <span className="inline-block mt-1 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-400/30">
-                    Score: 97.6%
+                  <p className="text-slate-300 text-xs mt-1 leading-relaxed">
+                    Currently working on enterprise network management systems, scalable backend architectures, and high-performance software modules.
+                  </p>
+                  <span className="inline-block mt-1.5 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-400/30">
+                    FULL TIME::SOFTWARE_ENGINEER
                   </span>
                 </li>
                 <li className="ml-4">
                   <div className="absolute w-3.5 h-3.5 bg-purple-400 rounded-full -left-[7px] top-1.5 border-2 border-slate-950 animate-pulse" />
                   <div className="text-sm font-bold text-purple-300 font-mono">
-                    2020 – 2022
+                    2025 November – 2026 February
                   </div>
-                  <div className="text-slate-200 text-sm font-medium">
-                    Higher Secondary, Mangalam Higher Secondary School, Erode
+                  <div className="text-slate-100 text-sm font-bold">
+                    Software Development Intern at GoalStox, Mumbai
                   </div>
-                  <span className="inline-block mt-1 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-300 border border-purple-400/30">
-                    12th Score: 91.5%
+                  <p className="text-slate-300 text-xs mt-1 leading-relaxed">
+                    Developed full-stack web applications using PHP, React, MySQL, and Node.js. Built real-time analytics dashboards and API integrations.
+                  </p>
+                  <span className="inline-block mt-1.5 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-300 border border-purple-400/30">
+                    INTERNSHIP::SOFTWARE_DEV
                   </span>
                 </li>
                 <li className="ml-4">
@@ -236,23 +236,77 @@ export default function AboutPage() {
                   <div className="text-sm font-bold text-emerald-300 font-mono">
                     2022 – 2026
                   </div>
-                  <div className="text-slate-200 text-sm font-medium">
-                    B.Tech (Hons) IT, Government College of Engineering, Erode
+                  <div className="text-slate-100 text-sm font-bold">
+                    B.Tech (Hons) in Information Technology
                   </div>
-                  <span className="inline-block mt-1 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-400/30">
-                    CGPA: 8.43
+                  <div className="text-slate-300 text-xs mt-0.5">
+                    Government College of Engineering, Erode
+                  </div>
+                  <span className="inline-block mt-1.5 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-400/30">
+                    CGPA: 8.41
                   </span>
                 </li>
                 <li className="ml-4">
-                  <div className="absolute w-3.5 h-3.5 bg-amber-400 rounded-full -left-[7px] top-1.5 border-2 border-slate-950 animate-pulse" />
-                  <div className="text-sm font-bold text-amber-300 font-mono">
-                    2025
+                  <div className="absolute w-3.5 h-3.5 bg-blue-400 rounded-full -left-[7px] top-1.5 border-2 border-slate-950 animate-pulse" />
+                  <div className="text-sm font-bold text-blue-300 font-mono">
+                    2020 – 2021
                   </div>
                   <div className="text-slate-200 text-sm font-medium">
-                    Launched SocioPedia, Blog App, and Excel Analysis Platform
+                    Higher Secondary (12th), Mangalam Higher Secondary School, Anthiyur, Erode
                   </div>
+                  <span className="inline-block mt-1 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-blue-500/10 text-blue-300 border border-blue-400/30">
+                    12th Score: 91.5%
+                  </span>
+                </li>
+                <li className="ml-4">
+                  <div className="absolute w-3.5 h-3.5 bg-pink-400 rounded-full -left-[7px] top-1.5 border-2 border-slate-950 animate-pulse" />
+                  <div className="text-sm font-bold text-pink-300 font-mono">
+                    2018 – 2019
+                  </div>
+                  <div className="text-slate-200 text-sm font-medium">
+                    SSLC (10th), Mangalam Higher Secondary School, Anthiyur, Erode
+                  </div>
+                  <span className="inline-block mt-1 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-pink-500/10 text-pink-300 border border-pink-400/30">
+                    10th Score: 97.6%
+                  </span>
                 </li>
               </ol>
+            </div>
+          </AiOsWindow>
+
+
+          {/* Extra-Curricular Activities & Event Leadership */}
+          <AiOsWindow
+            title="EXTRA_CURRICULAR_LEADERSHIP_DB"
+            command="cat /sys/extra_curricular_activities.json"
+            statusText="LEADERSHIP::VERIFIED"
+            depth={25}
+          >
+            <div>
+              <h2 className="text-xl font-bold text-cyan-300 mb-4 font-mono flex items-center gap-2">
+                <span className="text-purple-400">★</span> Extra-Curricular Activities & Leadership
+              </h2>
+              <div className="space-y-4 font-mono text-xs">
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-purple-500/30 shadow-md hover:border-purple-400 transition-all">
+                  <div className="flex items-center justify-between gap-2 flex-wrap mb-1.5">
+                    <span className="text-slate-100 font-bold text-sm">Overall Event Coordinator — GUESTO 2026</span>
+                    <span className="text-purple-300 font-bold px-2 py-0.5 rounded bg-purple-500/10 border border-purple-400/30 text-[10px]">FINAL YEAR</span>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed font-sans text-xs">
+                    Handled and orchestrated all symposium events as the Overall Event Coordinator for GUESTO 2026 in college final year. Led event planning, team management, scheduling, budget allocation, logistics, and multi-college participant engagement.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-cyan-500/30 shadow-md hover:border-cyan-400 transition-all">
+                  <div className="flex items-center justify-between gap-2 flex-wrap mb-1.5">
+                    <span className="text-slate-100 font-bold text-sm">Event Co-Coordinator (Hunt Mods) — GUESTO 2025</span>
+                    <span className="text-cyan-300 font-bold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-400/30 text-[10px]">THIRD YEAR</span>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed font-sans text-xs">
+                    Coordinated and managed the &apos;Hunt Mods&apos; technical competition at GUESTO 2025 during college third year. Supervised event rules, participant registrations, stage execution, and evaluation metrics.
+                  </p>
+                </div>
+              </div>
             </div>
           </AiOsWindow>
 
@@ -263,6 +317,7 @@ export default function AboutPage() {
             statusText="CERTS::AUTHENTIC"
             depth={25}
           >
+
             <div>
               <h2 className="text-xl font-bold text-cyan-300 mb-4 font-mono">
                 Certifications
@@ -287,28 +342,11 @@ export default function AboutPage() {
               </div>
             </div>
           </AiOsWindow>
-
-          {/* Domain Interests */}
-          <AiOsWindow
-            title="DOMAIN_INTERESTS_DB"
-            command="cat /sys/domain_interests.json"
-            statusText="ACTIVE::FOCUS"
-            depth={25}
-          >
-            <div>
-              <h2 className="text-xl font-bold text-cyan-300 mb-2 font-mono">
-                Domain Interests
-              </h2>
-              <p className="text-slate-200 text-base leading-relaxed">
-                Full stack web development with PHP, MERN stack, database
-                integration and querying, problem solving in Python, DSA.
-              </p>
-            </div>
-          </AiOsWindow>
         </div>
       </div>
     </section>
   );
 }
+
 
 

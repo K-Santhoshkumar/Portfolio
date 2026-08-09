@@ -47,8 +47,18 @@ export default function AiOsWindow({
                 drag={isDraggable && !isMaximized}
                 dragElastic={0.05}
                 dragMomentum={false}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{
+                    opacity: isClosed ? 0 : 1,
+                    y: isClosed ? -100 : [0, -6, 0],
+                }}
+                transition={{
+                    y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                    opacity: { duration: 0.4 },
+                }}
                 onMouseDown={() => setZIndex(40)}
-                className={`relative rounded-3xl bg-slate-950/85 backdrop-blur-3xl border border-cyan-500/30 shadow-2xl shadow-cyan-950/60 overflow-hidden transition-all duration-300 group/window ${
+
+                className={`relative rounded-3xl bg-slate-950/85 backdrop-blur-3xl border border-cyan-500/30 shadow-2xl shadow-cyan-950/60 overflow-hidden transition-colors duration-300 group/window ${
                     isMaximized ? "scale-[1.02] border-cyan-400/70" : ""
                 } ${className}`}
                 style={{ transformStyle: "preserve-3d", zIndex }}
@@ -111,11 +121,12 @@ export default function AiOsWindow({
                     className="px-6 py-2 bg-slate-950/80 border-b border-white/5 font-mono text-[11px] text-slate-400 flex items-center justify-between"
                     style={{ transform: "translateZ(15px)" }}
                 >
-                    <div className="flex items-center gap-2">
-                        <span className="text-purple-400 font-bold">jarvis@core:~$</span>
-                        <span className="text-cyan-300 font-medium">{command}</span>
-                        <span className="w-2 h-4 bg-cyan-400 animate-pulse inline-block" />
+                    <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden mr-4">
+                        <span className="text-purple-400 font-bold shrink-0">jarvis@core:~$</span>
+                        <span className="text-cyan-300 font-medium truncate">{command}</span>
+                        <span className="w-2 h-4 bg-cyan-400 animate-pulse inline-block shrink-0" />
                     </div>
+
                     <div className="hidden lg:flex items-center gap-4 text-[10px] font-mono text-slate-400">
                         <span>CPU: 14.2%</span>
                         <span>MEM: 4.8GB</span>

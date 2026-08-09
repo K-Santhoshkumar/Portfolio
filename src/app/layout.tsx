@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import { Montserrat, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
-import MeteorBackground from "../components/MeteorBackground";
+import SpaceStarsBackground from "../components/background/SpaceStarsBackground";
+
+
+
+
+
+
 import Footer from "../components/Footer";
 import { Providers } from "./providers";
 import AiOsDesktopDock from "../components/ui/AiOsDesktopDock";
@@ -42,7 +48,13 @@ export default function RootLayout({
         <Providers>
           <OsBootSequence />
           <CustomCursor />
-          <MeteorBackground />
+          <SpaceStarsBackground />
+
+
+
+
+
+
           <Navbar />
           <AiOsDesktopIcons />
           <div className="pt-16 sm:pt-20 pb-36 sm:pb-40 min-h-screen relative z-10">{children}</div>
