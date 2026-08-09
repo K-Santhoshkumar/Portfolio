@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import ExperienceCard from "@/components/ExperienceCard";
+import { Briefcase, Building2, Code2 } from "lucide-react";
+
 
 const experiences = [
     {
@@ -28,16 +30,49 @@ const experiences = [
 
 export default function ExperiencePage() {
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            {/* Career Metrics HUD Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
+                <div className="bg-slate-900/80 border border-cyan-500/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl backdrop-blur-xl">
+                    <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400">
+                        <Briefcase size={22} />
+                    </div>
+                    <div>
+                        <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">Total Roles</span>
+                        <span className="text-sm font-mono font-bold text-slate-100">2 Internships</span>
+                    </div>
+                </div>
+
+                <div className="bg-slate-900/80 border border-purple-500/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl backdrop-blur-xl">
+                    <div className="p-3 rounded-xl bg-purple-500/10 text-purple-400">
+                        <Building2 size={22} />
+                    </div>
+                    <div>
+                        <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">Companies</span>
+                        <span className="text-sm font-mono font-bold text-slate-100">GoalStox & CubeAI</span>
+                    </div>
+                </div>
+
+                <div className="col-span-2 sm:col-span-1 bg-slate-900/80 border border-emerald-500/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl backdrop-blur-xl">
+                    <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
+                        <Code2 size={22} />
+                    </div>
+                    <div>
+                        <span className="text-[10px] font-mono text-slate-400 font-bold block uppercase">Focus</span>
+                        <span className="text-sm font-mono font-bold text-slate-100">Django & AI/ML</span>
+                    </div>
+                </div>
+            </div>
+
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center mb-16"
+                className="text-center mb-12"
             >
-                <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                <h1 className="text-4xl md:text-5xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 font-mono">
                     Professional Experience
                 </h1>
-                <p className="text-gray-800 dark:text-gray-300 text-lg max-w-2xl mx-auto font-medium">
+                <p className="text-slate-300 text-lg max-w-2xl mx-auto font-medium">
                     A track record of building scalable web applications and AI-driven solutions.
                 </p>
             </motion.div>
@@ -50,3 +85,4 @@ export default function ExperiencePage() {
         </div>
     );
 }
+

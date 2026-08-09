@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import ThreeBackground from "./ThreeBackground";
 
 export default function MeteorBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,7 +32,7 @@ export default function MeteorBackground() {
         const stars: { x: number; y: number; size: number; opacity: number; pulseSpeed: number }[] = [];
 
         // Initialize Stars
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 150; i++) {
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -55,8 +56,7 @@ export default function MeteorBackground() {
         let meteorTimer = 0;
 
         const animate = () => {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Trails
-            ctx.fillRect(0, 0, canvas.width, canvas.height); // Clear with fade for trails
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Draw Stars
             stars.forEach(star => {
@@ -71,7 +71,7 @@ export default function MeteorBackground() {
 
             // Spawn Meteors
             meteorTimer++;
-            if (meteorTimer > 100 && Math.random() > 0.95) { // Random chance to spawn
+            if (meteorTimer > 90 && Math.random() > 0.92) {
                 meteors.push(createMeteor());
                 meteorTimer = 0;
             }
@@ -82,7 +82,6 @@ export default function MeteorBackground() {
                 m.x += Math.cos(m.angle) * m.speed;
                 m.y += Math.sin(m.angle) * m.speed;
 
-                // Draw Meteor
                 const gradient = ctx.createLinearGradient(m.x, m.y, m.x - Math.cos(m.angle) * m.length, m.y - Math.sin(m.angle) * m.length);
                 gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
                 gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
@@ -94,7 +93,6 @@ export default function MeteorBackground() {
                 ctx.lineTo(m.x - Math.cos(m.angle) * m.length, m.y - Math.sin(m.angle) * m.length);
                 ctx.stroke();
 
-                // Remove if off screen
                 if (m.y > canvas.height + 100 || m.x > canvas.width + 100) {
                     meteors.splice(i, 1);
                 }
@@ -109,13 +107,18 @@ export default function MeteorBackground() {
     }, [dimensions]);
 
     return (
-        <div className="fixed inset-0 -z-10 bg-slate-950 overflow-hidden">
+        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+            {/* 3D WebGL Canvas Layer */}
+            <ThreeBackground />
+
             {/* Nebular Gradients overlay */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#000000] to-black opacity-80" />
-            <div className="absolute -top-[30%] -left-[10%] w-[70%] h-[70%] rounded-full bg-primary/10 blur-[120px]" />
-            <div className="absolute top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-secondary/10 blur-[100px]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-transparent via-[#030712]/40 to-[#030712] opacity-50 pointer-events-none" />
+            <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-cyan-500/15 blur-[140px] pointer-events-none" />
+            <div className="absolute top-[40%] -right-[10%] w-[50%] h-[50%] rounded-full bg-purple-500/15 blur-[130px] pointer-events-none" />
+            <div className="absolute bottom-0 left-[20%] w-[50%] h-[40%] rounded-full bg-blue-600/10 blur-[150px] pointer-events-none" />
 
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
         </div>
     );
 }
+

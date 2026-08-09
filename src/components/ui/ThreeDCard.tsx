@@ -1,81 +1,59 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 interface ThreeDCardProps {
     children: React.ReactNode;
     className?: string;
     spotlightColor?: string;
+    depth?: number;
 }
 
 export default function ThreeDCard({
     children,
     className = "",
-    spotlightColor = "rgba(14, 165, 233, 0.15)", // Default to Sky Blue
+    spotlightColor = "rgba(0, 240, 255, 0.15)",
 }: ThreeDCardProps) {
-    const ref = useRef<HTMLDivElement>(null);
-
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
-    const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
-
-    const rotateX = useTransform(mouseY, [-0.5, 0.5], ["7deg", "-7deg"]);
-    const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-7deg", "7deg"]);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
-
-        const rect = ref.current.getBoundingClientRect();
-
-        const width = rect.width;
-        const height = rect.height;
-
-        const mouseXWithOffset = e.clientX - rect.left;
-        const mouseYWithOffset = e.clientY - rect.top;
-
-        const xPct = mouseXWithOffset / width - 0.5;
-        const yPct = mouseYWithOffset / height - 0.5;
-
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        setMousePos({ x, y });
     };
 
     return (
         <motion.div
-            ref={ref}
+            ref={cardRef}
             onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-            }}
-            className={`relative active:scale-95 transition-transform duration-200 ease-linear ${className}`}
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className={`relative group/card w-full rounded-3xl transition-all duration-300 ${className}`}
         >
-            <div
-                style={{
-                    transform: "translateZ(50px)",
-                    transformStyle: "preserve-3d",
-                }}
-                className="absolute -inset-2 rounded-[2rem] bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition duration-500 blur-xl -z-10"
-            />
-            <div className={`relative h-full w-full overflow-hidden ${className}`}>
+            {/* Smooth Ambient Backlight Glow */}
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-emerald-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 blur-xl -z-10" />
+
+            {/* Main Content Container */}
+            <div className="relative h-full w-full rounded-3xl">
                 {children}
+
+                {/* Smooth Mouse Follow Light Glare */}
                 <div
-                    className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-500 z-10"
+                    className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 overflow-hidden z-30"
                     style={{
-                        background: `radial-gradient(600px circle at ${mouseX.get() * 100 + 50}% ${mouseY.get() * 100 + 50}%, ${spotlightColor}, transparent 40%)`,
+                        background: `radial-gradient(500px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 50%)`,
                     }}
                 />
+
+                {/* Elegant Glass Border Highlight */}
+                <div className="pointer-events-none absolute inset-0 rounded-3xl border border-cyan-500/20 group-hover/card:border-cyan-400/50 transition-colors duration-300 z-40" />
             </div>
         </motion.div>
     );
 }
+
+

@@ -1,10 +1,20 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
-import { projects, Project } from "../../data/projects";
+
+import { projects } from "../../data/projects";
+import type { Project } from "../../data/projects";
+
 import Image from "next/image";
+
 import Link from "next/link";
 import { FiExternalLink } from "react-icons/fi";
+
 import { motion } from "framer-motion";
+import AiOsWindow from "@/components/ui/AiOsWindow";
+
+
+
 
 function isValidImagePath(path: string): boolean {
   return (
@@ -13,39 +23,6 @@ function isValidImagePath(path: string): boolean {
   );
 }
 
-const tagColors = {
-  "Next.js": "bg-gray-200 text-gray-800",
-  TypeScript: "bg-blue-100 text-blue-700",
-  Prisma: "bg-purple-100 text-purple-700",
-  Clerk: "bg-red-100 text-red-700",
-  "Tailwind CSS": "bg-teal-100 text-teal-700",
-  UploadThing: "bg-orange-100 text-orange-700",
-  Neon: "bg-green-100 text-green-700",
-  Shadcn: "bg-indigo-100 text-indigo-700",
-  "React (Vite)": "bg-blue-100 text-blue-700",
-  "React.js": "bg-blue-100 text-blue-700",
-  "Node.js": "bg-green-100 text-green-700",
-  Express: "bg-gray-100 text-gray-700",
-  "Express.js": "bg-gray-100 text-gray-700",
-  MongoDB: "bg-emerald-100 text-emerald-700",
-  "MongoDB (Mongoose)": "bg-emerald-100 text-emerald-700",
-  JWT: "bg-yellow-100 text-yellow-700",
-  Multer: "bg-pink-100 text-pink-700",
-  ImageKit: "bg-purple-100 text-purple-700",
-  GoogleGenAI: "bg-rose-100 text-rose-700",
-  Quill: "bg-violet-100 text-violet-700",
-  "Chart.js": "bg-red-100 text-red-700",
-  SheetJS: "bg-lime-100 text-lime-700",
-  ThreeJS: "bg-cyan-100 text-cyan-700",
-  PDFtoCanvas: "bg-amber-100 text-amber-700",
-  PHP: "bg-indigo-100 text-indigo-700",
-  HTML: "bg-orange-100 text-orange-700",
-  CSS: "bg-blue-100 text-blue-700",
-  JavaScript: "bg-yellow-100 text-yellow-700",
-  EJS: "bg-emerald-100 text-emerald-700",
-  "express-fileupload": "bg-pink-100 text-pink-700",
-  "connect-flash": "bg-rose-100 text-rose-700",
-};
 
 export default function Projects() {
   const [mounted, setMounted] = useState(false);
@@ -84,92 +61,101 @@ export default function Projects() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col gap-16 md:gap-24">
+      <div className="flex flex-col gap-12 md:gap-16">
         {projects.map((project: Project, index: number) => (
-          <motion.div
+          <AiOsWindow
             key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
-            className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-8 md:gap-12 items-center group`}
+            title={`DEPLOYED_BUILD_0${index + 1}`}
+            command={`./run_module.sh --project=${project.id}`}
+            statusText="STATUS::DEPLOYED"
+            depth={35}
           >
-            {/* Project Image */}
-            <div className="w-full md:w-1/2 relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-primary/50 transition-colors duration-500">
-              <Link href={`/projects/${project.id}`} className="block h-full w-full relative">
-                {isValidImagePath(project.imagePath) ? (
-                  <Image
-                    src={project.imagePath}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      const parent = e.currentTarget.parentNode as HTMLElement | null;
-                      if (parent) {
-                        const fallback = parent.querySelector(".fallback-img");
-                        fallback?.classList.remove("hidden");
-                      }
-                    }}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority={index < 2}
-                  />
-                ) : null}
-                <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm text-white text-center text-base font-semibold hidden">
-                  {project.title}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                  <span className="text-white font-bold flex items-center gap-2">
-                    View Project <FiExternalLink />
-                  </span>
-                </div>
-              </Link>
-            </div>
-
-            {/* Project Info */}
-            <div className="w-full md:w-1/2 flex flex-col space-y-6">
-              <div className="space-y-2">
-                <span className="text-primary font-mono text-sm tracking-widest uppercase font-bold">Project 0{index + 1}</span>
-                <Link href={`/projects/${project.id}`}>
-                  <h3 className="text-3xl md:text-4xl font-bold hover:text-primary transition-colors cursor-pointer">
+            <div
+              className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-8 md:gap-12 items-center group`}
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {/* Project Image */}
+              <div 
+                className="w-full md:w-1/2 relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-cyan-500/30 group-hover:border-cyan-400 transition-colors duration-500"
+                style={{ transform: "translateZ(30px)" }}
+              >
+                <Link href={`/projects/${project.id}`} className="block h-full w-full relative">
+                  {isValidImagePath(project.imagePath) ? (
+                    <Image
+                      src={project.imagePath}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        const parent = e.currentTarget.parentNode as HTMLElement | null;
+                        if (parent) {
+                          const fallback = parent.querySelector(".fallback-img");
+                          fallback?.classList.remove("hidden");
+                        }
+                      }}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority={index < 2}
+                    />
+                  ) : null}
+                  <div className="fallback-img absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm text-white text-center text-base font-semibold hidden font-mono">
                     {project.title}
-                  </h3>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                    <span className="text-cyan-300 font-mono text-sm font-bold flex items-center gap-2">
+                      View Project <FiExternalLink />
+                    </span>
+                  </div>
                 </Link>
               </div>
 
-              <p className="text-lg text-foreground/70 dark:text-gray-300 leading-relaxed font-medium">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className={`text-[10px] uppercase font-bold px-3 py-1.5 rounded-full border border-white/5 ${tagColors[tag as keyof typeof tagColors] ||
-                      "bg-white/5 text-gray-400"
-                      }`}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-6 pt-4">
-                <Link href={`/projects/${project.id}`} className="flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors font-bold group/link underline underline-offset-8">
-                  <span>Full details</span>
-                  <FiExternalLink size={20} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                </Link>
-                {project.demoUrl && (
-                  <Link href={project.demoUrl} target="_blank" className="flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors font-bold group/link">
-                    <FiExternalLink size={24} className="group-hover/link:scale-110 transition-transform" />
-                    <span>Live Demo</span>
+              {/* Project Info */}
+              <div 
+                className="w-full md:w-1/2 flex flex-col space-y-5"
+                style={{ transform: "translateZ(20px)" }}
+              >
+                <div className="space-y-1">
+                  <span className="text-cyan-400 font-mono text-xs tracking-widest uppercase font-bold">PROJECT_0{index + 1}</span>
+                  <Link href={`/projects/${project.id}`}>
+                    <h3 className="text-3xl md:text-4xl font-bold text-slate-100 hover:text-cyan-300 transition-colors cursor-pointer">
+                      {project.title}
+                    </h3>
                   </Link>
-                )}
+                </div>
+
+                <p className="text-base md:text-lg text-slate-300 leading-relaxed font-medium">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-mono uppercase font-bold px-3 py-1 rounded-lg bg-cyan-500/10 text-cyan-300 border border-cyan-400/30 shadow-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-6 pt-2">
+                  <Link href={`/projects/${project.id}`} className="flex items-center gap-2 text-slate-300 hover:text-cyan-300 transition-colors font-mono font-bold group/link underline underline-offset-8 text-sm">
+                    <span>Full details</span>
+                    <FiExternalLink size={18} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                  </Link>
+                  {project.demoUrl && (
+                    <Link href={project.demoUrl} target="_blank" className="flex items-center gap-2 text-slate-300 hover:text-cyan-300 transition-colors font-mono font-bold group/link text-sm">
+                      <FiExternalLink size={20} className="group-hover/link:scale-110 transition-transform" />
+                      <span>Live Demo</span>
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
-          </motion.div>
+          </AiOsWindow>
         ))}
       </div>
     </section>
   );
 }
+

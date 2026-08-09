@@ -5,6 +5,10 @@ import Navbar from "../components/Navbar";
 import MeteorBackground from "../components/MeteorBackground";
 import Footer from "../components/Footer";
 import { Providers } from "./providers";
+import AiOsDesktopDock from "../components/ui/AiOsDesktopDock";
+import AiOsDesktopIcons from "../components/ui/AiOsDesktopIcons";
+import OsBootSequence from "../components/ui/OsBootSequence";
+import CustomCursor from "../components/ui/CustomCursor";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -30,18 +34,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased min-h-screen`}
+        className={`${montserrat.variable} ${geistMono.variable} antialiased min-h-screen cursor-default`}
         style={{
           fontFamily: "var(--font-montserrat), Arial, Helvetica, sans-serif",
         }}
       >
         <Providers>
+          <OsBootSequence />
+          <CustomCursor />
           <MeteorBackground />
           <Navbar />
-          <div className="pt-16 pb-16 min-h-screen relative z-10">{children}</div>
+          <AiOsDesktopIcons />
+          <div className="pt-16 sm:pt-20 pb-36 sm:pb-40 min-h-screen relative z-10">{children}</div>
+
+          <AiOsDesktopDock />
           <Footer />
         </Providers>
       </body>
     </html>
   );
 }
+
+

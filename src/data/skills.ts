@@ -154,28 +154,35 @@ export const skills: SkillItem[] = [
     color: "text-black dark:text-white",
     type: "technical",
   },
-  // Additional Backend & Real-time Frameworks
-  { name: "Flask", icon: "SiFlask", color: "text-gray-700", type: "technical" },
+  // Additional Backend & DevOps Skills
+  { name: "Spring Boot", icon: "SiSpringboot", color: "text-emerald-500", type: "technical" },
+  { name: "Docker", icon: "FaDocker", color: "text-blue-400", type: "technical" },
+  { name: "CI/CD", icon: "SiGithubactions", color: "text-blue-500", type: "technical" },
+  { name: "Kafka", icon: "SiApachekafka", color: "text-cyan-300", type: "technical" },
+  { name: "Linux", icon: "FaLinux", color: "text-yellow-500", type: "technical" },
+  { name: "Flask", icon: "SiFlask", color: "text-gray-400", type: "technical" },
   { name: "WebSockets", icon: "FaNetworkWired", color: "text-blue-500", type: "technical" },
-  { name: "Django", icon: "SiDjango", color: "text-green-700", type: "technical" },
-  { name: "FastAPI", icon: "SiFastapi", color: "text-teal-500", type: "technical" },
+  { name: "Django", icon: "SiDjango", color: "text-emerald-600", type: "technical" },
+  { name: "FastAPI", icon: "SiFastapi", color: "text-teal-400", type: "technical" },
+
   // Soft Skills
   {
     name: "Quick Learner",
     icon: "GiBrain",
-    color: "text-yellow-500",
+    color: "text-yellow-400",
     type: "soft",
   },
   {
     name: "Team Management",
     icon: "GiTeamIdea",
-    color: "text-blue-500",
+    color: "text-blue-400",
     type: "soft",
   },
   {
     name: "Adaptability",
     icon: "GiFlexibleStar",
-    color: "text-green-500",
+    color: "text-emerald-400",
     type: "soft",
   },
 ];
+
