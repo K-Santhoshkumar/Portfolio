@@ -1,9 +1,54 @@
 "use client";
 import React from "react";
 import { skills } from "../../data/skills";
-import * as FaIcons from "react-icons/fa";
-import * as SiIcons from "react-icons/si";
-import * as GiIcons from "react-icons/gi";
+import {
+  FaJava,
+  FaPython,
+  FaJs,
+  FaPhp,
+  FaDatabase,
+  FaHtml5,
+  FaCss3Alt,
+  FaSass,
+  FaReact,
+  FaNodeJs,
+  FaKey,
+  FaCode,
+  FaGithub,
+  FaDocker,
+  FaLinux,
+  FaNetworkWired,
+} from "react-icons/fa";
+import {
+  SiTypescript,
+  SiTailwindcss,
+  SiExpress,
+  SiMongoose,
+  SiVite,
+  SiRedux,
+  SiNextdotjs,
+  SiShadcnui,
+  SiMongodb,
+  SiMysql,
+  SiPostgresql,
+  SiPrisma,
+  SiSupabase,
+  SiNetlify,
+  SiVercel,
+  SiSpringboot,
+  SiGithubactions,
+  SiApachekafka,
+  SiFlask,
+  SiDjango,
+  SiFastapi,
+} from "react-icons/si";
+import {
+  GiTalk,
+  GiPieChart,
+  GiBrain,
+  GiTeamIdea,
+  GiFlexibleStar,
+} from "react-icons/gi";
 import { motion } from "framer-motion";
 import MagicCard from "@/components/ui/MagicCard";
 import MagneticWrapper from "@/components/ui/MagneticWrapper";
@@ -12,9 +57,48 @@ import AiOsWindow from "@/components/ui/AiOsWindow";
 type IconComponent = React.ComponentType<{ className?: string }>;
 
 const iconMap: Record<string, IconComponent> = {
-  ...FaIcons,
-  ...SiIcons,
-  ...GiIcons,
+  FaJava,
+  FaPython,
+  FaJs,
+  FaPhp,
+  FaDatabase,
+  FaHtml5,
+  FaCss3Alt,
+  FaSass,
+  FaReact,
+  FaNodeJs,
+  FaKey,
+  FaCode,
+  FaGithub,
+  FaDocker,
+  FaLinux,
+  FaNetworkWired,
+  SiTypescript,
+  SiTailwindcss,
+  SiExpress,
+  SiMongoose,
+  SiVite,
+  SiRedux,
+  SiNextdotjs,
+  SiShadcnui,
+  SiMongodb,
+  SiMysql,
+  SiPostgresql,
+  SiPrisma,
+  SiSupabase,
+  SiNetlify,
+  SiVercel,
+  SiSpringboot,
+  SiGithubactions,
+  SiApachekafka,
+  SiFlask,
+  SiDjango,
+  SiFastapi,
+  GiTalk,
+  GiPieChart,
+  GiBrain,
+  GiTeamIdea,
+  GiFlexibleStar,
 };
 
 export default function Skills(): React.ReactElement {

@@ -23,7 +23,7 @@ export default function AiOsWindow({
     className = "",
     depth = 30,
     spotlightColor = "rgba(0, 240, 255, 0.25)",
-    isDraggable = true,
+    isDraggable = false,
 }: AiOsWindowProps) {
     const [isMinimized, setIsMinimized] = useState(false);
     const [isMaximized, setIsMaximized] = useState(false);
@@ -66,9 +66,11 @@ export default function AiOsWindow({
                 {/* Metallic Cyber Border Gradient Sweep */}
                 <div className="absolute inset-0 rounded-3xl pointer-events-none border border-cyan-400/20 group-hover/window:border-cyan-400/50 transition-colors duration-500 z-10" />
 
-                {/* AI OS Window Top Bar / Header (Drag Handle) */}
+                {/* AI OS Window Top Bar / Header */}
                 <div
-                    className="flex items-center justify-between px-6 py-3.5 bg-slate-900/90 border-b border-white/10 select-none relative z-30 cursor-grab active:cursor-grabbing"
+                    className={`flex items-center justify-between px-2.5 sm:px-6 py-2.5 sm:py-3 bg-slate-900/90 border-b border-white/10 select-none relative z-30 ${
+                        isDraggable ? "cursor-grab active:cursor-grabbing" : ""
+                    }`}
                     style={{ transform: "translateZ(25px)" }}
                 >
                     {/* Window Controls */}
@@ -116,23 +118,7 @@ export default function AiOsWindow({
                     </div>
                 </div>
 
-                {/* Cyber HUD Terminal Command Strip */}
-                <div
-                    className="px-6 py-2 bg-slate-950/80 border-b border-white/5 font-mono text-[11px] text-slate-400 flex items-center justify-between"
-                    style={{ transform: "translateZ(15px)" }}
-                >
-                    <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden mr-4">
-                        <span className="text-purple-400 font-bold shrink-0">jarvis@core:~$</span>
-                        <span className="text-cyan-300 font-medium truncate">{command}</span>
-                        <span className="w-2 h-4 bg-cyan-400 animate-pulse inline-block shrink-0" />
-                    </div>
 
-                    <div className="hidden lg:flex items-center gap-4 text-[10px] font-mono text-slate-400">
-                        <span>CPU: 14.2%</span>
-                        <span>MEM: 4.8GB</span>
-                        <span className="text-emerald-400">SEC: AES-256</span>
-                    </div>
-                </div>
 
                 {/* Main Content Area */}
                 {!isMinimized && (
@@ -140,7 +126,7 @@ export default function AiOsWindow({
                         initial={{ opacity: 0, height: "auto" }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="p-3.5 sm:p-6 md:p-10 relative z-20"
+                        className="p-2.5 sm:p-6 md:p-10 relative z-20 max-w-full overflow-x-hidden"
                         style={{ transform: "translateZ(20px)" }}
                     >
 

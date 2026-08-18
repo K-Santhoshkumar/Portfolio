@@ -35,7 +35,7 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 max-w-6xl mx-auto text-foreground">
+    <section id="contact" className="py-8 sm:py-20 px-1 sm:px-4 max-w-6xl mx-auto text-foreground w-full">
       <AiOsWindow
         title="ENCRYPTED_COMMS_TERMINAL"
         command="./open_comms.sh --secure"
@@ -46,12 +46,12 @@ export default function ContactSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black mb-3 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-tight font-mono">
             Get In Touch
           </h2>
-          <p className="text-lg text-slate-300 max-w-xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm sm:text-lg text-slate-300 max-w-xl mx-auto font-medium leading-relaxed">
             I am always open to discussing new opportunities, creative ideas or visions to be part of your projects.
           </p>
         </motion.div>

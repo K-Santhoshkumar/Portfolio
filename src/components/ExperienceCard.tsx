@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Calendar, CheckCircle2 } from "lucide-react";
 import AiOsWindow from "@/components/ui/AiOsWindow";

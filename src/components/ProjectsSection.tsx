@@ -30,23 +30,23 @@ export default function ProjectsSection(): React.ReactElement {
   }
 
   return (
-    <section id="projects" className="py-20 px-4 max-w-5xl mx-auto text-foreground">
+    <section id="projects" className="py-8 sm:py-20 px-1 sm:px-4 max-w-6xl mx-auto text-foreground w-full">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-16"
+        className="text-center mb-10 sm:mb-16"
       >
-        <h2 className="text-4xl md:text-6xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-tighter">
+        <h2 className="text-2xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-tighter font-mono">
           Featured Projects
         </h2>
-        <p className="text-xl text-slate-300 max-w-2xl mx-auto font-medium">
+        <p className="text-sm sm:text-xl text-slate-300 max-w-2xl mx-auto font-medium">
           A selection of my recent works and technical contributions.
         </p>
       </motion.div>
 
-      <div className="flex flex-col gap-12 md:gap-16">
+      <div className="flex flex-col gap-8 md:gap-16">
         {projects.slice(0, 3).map((project: Project, index: number) => (
           <AiOsWindow
             key={project.id}
@@ -56,7 +56,7 @@ export default function ProjectsSection(): React.ReactElement {
             depth={35}
           >
             <div
-              className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-8 md:gap-12 items-center group`}
+              className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-6 md:gap-12 items-center group`}
               style={{ transformStyle: "preserve-3d" }}
             >
               {/* Project Image with Z-axis 3D Elevation */}
@@ -85,13 +85,13 @@ export default function ProjectsSection(): React.ReactElement {
 
               {/* Project Info with Z-axis 3D Depth */}
               <div 
-                className="w-full md:w-1/2 flex flex-col space-y-5"
+                className="w-full md:w-1/2 flex flex-col space-y-4 sm:space-y-5"
                 style={{ transform: "translateZ(20px)" }}
               >
                 <div className="space-y-1">
-                  <span className="text-cyan-400 font-mono text-xs tracking-widest uppercase font-bold">PROJECT_0{index + 1}</span>
+                  <span className="text-cyan-400 font-mono text-[10px] sm:text-xs tracking-widest uppercase font-bold">PROJECT_0{index + 1}</span>
                   <Link href={`/projects/${project.id}`}>
-                    <h3 className="text-3xl md:text-4xl font-bold text-slate-100 hover:text-cyan-300 transition-colors cursor-pointer">
+                    <h3 className="text-xl sm:text-3xl md:text-4xl font-bold text-slate-100 hover:text-cyan-300 transition-colors cursor-pointer font-mono">
                       {project.title}
                     </h3>
                   </Link>

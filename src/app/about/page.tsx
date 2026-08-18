@@ -9,9 +9,9 @@ import AiOsWindow from "@/components/ui/AiOsWindow";
 
 export default function AboutPage() {
   return (
-    <section className="max-w-6xl mx-auto py-10 px-2 sm:py-16 sm:px-4 text-white relative z-10">
+    <section className="max-w-6xl mx-auto py-6 sm:py-16 px-2 sm:px-4 text-white relative z-10">
       {/* System HUD Overview Cards Bar */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8">
         <div className="bg-slate-900/80 border border-cyan-500/30 rounded-2xl p-4 flex items-center gap-3 shadow-xl backdrop-blur-xl">
           <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400">
             <FaGraduationCap size={22} />
@@ -160,7 +160,7 @@ export default function AboutPage() {
                   Domain Interests
                 </h3>
                 <p className="text-slate-200 text-xs leading-relaxed font-sans">
-                  Full stack web development with Java, Spring Boot, MERN stack, PHP, database integration and querying, Docker, Kafka, problem solving in Python & DSA.
+                  Full stack web development with Java, Spring Boot, MERN stack, Python, database integration and querying, problem solving in Python & DSA.
                 </p>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function AboutPage() {
                     Software Development Intern at GoalStox, Mumbai
                   </div>
                   <p className="text-slate-300 text-xs mt-1 leading-relaxed">
-                    Developed full-stack web applications using PHP, React, MySQL, and Node.js. Built real-time analytics dashboards and API integrations.
+                    Developed full-stack web applications using HTML, CSS, JS, Django, Django admin and Postgresql.
                   </p>
                   <span className="inline-block mt-1.5 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-300 border border-purple-400/30">
                     INTERNSHIP::SOFTWARE_DEV
@@ -252,7 +252,7 @@ export default function AboutPage() {
                     2020 – 2021
                   </div>
                   <div className="text-slate-200 text-sm font-medium">
-                    Higher Secondary (12th), Mangalam Higher Secondary School, Anthiyur, Erode
+                    Higher Secondary (12th - Maths Bio), Mangalam Higher Secondary School, Anthiyur, Erode
                   </div>
                   <span className="inline-block mt-1 text-xs font-mono font-bold px-2.5 py-0.5 rounded-md bg-blue-500/10 text-blue-300 border border-blue-400/30">
                     12th Score: 91.5%

@@ -53,8 +53,9 @@ export default function SpaceStarsBackground(): React.ReactElement {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("resize", handleResize);
 
-    // Generate 1,200 3D Spatial Stars
-    const starCount = Math.min(Math.floor(width / 1.2), 1200);
+    // Dynamically scale star count based on screen width (lower on mobile for maximum FPS)
+    const isMobile = width < 768;
+    const starCount = isMobile ? Math.min(Math.floor(width / 3.5), 220) : Math.min(Math.floor(width / 2), 600);
     const stars: Star3D[] = [];
     const starColors = ["#00f0ff", "#a855f7", "#38bdf8", "#ffffff", "#34d399"];
 
@@ -73,12 +74,12 @@ export default function SpaceStarsBackground(): React.ReactElement {
     // Dynamic Meteor / Shooting Star System
     const meteors: Meteor[] = [];
     const spawnMeteor = () => {
-      if (meteors.length >= 3) return;
+      if (meteors.length >= 2) return;
       meteors.push({
         x: Math.random() * width * 1.2 - width * 0.1,
         y: -50,
-        length: Math.random() * 140 + 80,
-        speed: Math.random() * 8 + 6,
+        length: Math.random() * 120 + 60,
+        speed: Math.random() * 7 + 5,
         angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
         opacity: 1,
       });
@@ -89,7 +90,7 @@ export default function SpaceStarsBackground(): React.ReactElement {
 
     const render = () => {
       frameCount++;
-      if (frameCount % 120 === 0 && Math.random() > 0.4) {
+      if (frameCount % 140 === 0 && Math.random() > 0.4) {
         spawnMeteor();
       }
 
@@ -111,13 +112,13 @@ export default function SpaceStarsBackground(): React.ReactElement {
         nebula1Y,
         Math.max(width, height) * 0.6
       );
-      grad1.addColorStop(0, "rgba(0, 240, 255, 0.12)");
-      grad1.addColorStop(0.5, "rgba(168, 85, 247, 0.08)");
+      grad1.addColorStop(0, "rgba(0, 240, 255, 0.10)");
+      grad1.addColorStop(0.5, "rgba(168, 85, 247, 0.06)");
       grad1.addColorStop(1, "rgba(2, 6, 23, 0.98)");
       ctx.fillStyle = grad1;
       ctx.fillRect(0, 0, width, height);
 
-      // Project & Render 3D Spatial Stars
+      // Project & Render 3D Spatial Stars (Zero shadowBlur overhead for maximum mobile FPS)
       for (let i = 0; i < starCount; i++) {
         const star = stars[i];
 
@@ -133,25 +134,21 @@ export default function SpaceStarsBackground(): React.ReactElement {
         const scale = fov / (fov + star.z);
         const px = (star.x + mouseX) * scale + width / 2;
         const py = (star.y + mouseY) * scale + height / 2;
-        const pr = Math.max(0.4, star.radius * scale * 1.5);
+        const pr = Math.max(0.4, star.radius * scale * 1.4);
 
         // Twinkle Opacity Math
         star.twinklePhase += star.twinkleSpeed;
         const twinkle = (Math.sin(star.twinklePhase) + 1) / 2;
-        const alpha = Math.min(1, Math.max(0.2, (1 - star.z / 1000) * (0.4 + twinkle * 0.6)));
+        const alpha = Math.min(1, Math.max(0.25, (1 - star.z / 1000) * (0.4 + twinkle * 0.6)));
 
         ctx.fillStyle = star.color;
         ctx.globalAlpha = alpha;
-        ctx.shadowColor = star.color;
-        ctx.shadowBlur = pr > 1.8 ? 8 : 2;
 
         ctx.beginPath();
         ctx.arc(px, py, pr, 0, Math.PI * 2);
         ctx.fill();
-
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1.0;
       }
+      ctx.globalAlpha = 1.0;
 
       // Render Dynamic Shooting Stars / Meteors
       for (let i = meteors.length - 1; i >= 0; i--) {

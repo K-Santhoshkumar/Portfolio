@@ -29,15 +29,15 @@ export default function AiOsDesktopDock(): React.ReactElement {
   ];
 
   return (
-    <div className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto max-w-[95vw] sm:max-w-max">
+    <div className="fixed bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 z-50 pointer-events-auto max-w-[98vw] sm:max-w-max">
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
-        className="flex items-center gap-1.5 p-1.5 sm:p-2 rounded-2xl bg-slate-950/90 backdrop-blur-3xl border border-cyan-500/30 shadow-2xl shadow-cyan-950/80 overflow-x-auto no-scrollbar max-w-full"
+        className="flex items-center gap-1 p-1 sm:p-2 rounded-2xl bg-slate-950/90 backdrop-blur-3xl border border-cyan-500/30 shadow-2xl shadow-cyan-950/80 overflow-x-auto no-scrollbar max-w-full"
       >
         {/* Desktop Taskbar Apps */}
-        <div className="flex items-center gap-1 sm:gap-1.5 px-1 sm:px-2 shrink-0">
+        <div className="flex items-center gap-0.5 sm:gap-1.5 px-0.5 sm:px-2 shrink-0">
 
           {dockApps.map((app) => {
             const Icon = app.icon;
@@ -54,16 +54,16 @@ export default function AiOsDesktopDock(): React.ReactElement {
                   href={app.href}
                   target={app.isExternal ? "_blank" : undefined}
                   rel={app.isExternal ? "noopener noreferrer" : undefined}
-                  className={`flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-xl transition-all duration-300 border ${
+                  className={`flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-xl transition-all duration-300 border ${
                     isActive
                       ? "bg-cyan-500/25 border-cyan-400 text-cyan-300 shadow-[0_0_18px_rgba(0,240,255,0.4)]"
                       : "bg-slate-900/80 border-white/10 text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40"
                   }`}
                 >
-                  <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <Icon className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                   {/* Active App Indicator Light */}
                   {isActive && (
-                    <span className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                    <span className="absolute -bottom-0.5 sm:-bottom-1 w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-cyan-400 animate-ping" />
                   )}
                 </Link>
 
@@ -77,12 +77,12 @@ export default function AiOsDesktopDock(): React.ReactElement {
           })}
         </div>
 
-        <div className="w-px h-6 bg-slate-800 mx-1" />
+        <div className="w-px h-5 bg-slate-800 mx-0.5 hidden sm:block" />
 
         {/* System Signal Pulse */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-white/10 text-xs font-mono text-emerald-400 select-none">
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-white/10 text-xs font-mono text-emerald-400 select-none">
           <Radio className="w-3.5 h-3.5 animate-pulse" />
-          <span className="text-[10px] font-bold tracking-wider hidden sm:inline-block">
+          <span className="text-[10px] font-bold tracking-wider hidden md:inline-block">
             JARVIS_LINK::100%
           </span>
         </div>

@@ -1,14 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import SpaceStarsBackground from "../components/background/SpaceStarsBackground";
-
-
-
-
-
-
 import Footer from "../components/Footer";
 import { Providers } from "./providers";
 import AiOsDesktopDock from "../components/ui/AiOsDesktopDock";
@@ -27,6 +21,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "SANTHOSHKUMAR K's Portfolio",
   description: "SANTHOSHKUMAR K's Portfolio",
@@ -38,9 +38,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden max-w-full">
       <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased min-h-screen cursor-default`}
+        className={`${montserrat.variable} ${geistMono.variable} antialiased min-h-screen cursor-default overflow-x-hidden max-w-full`}
         style={{
           fontFamily: "var(--font-montserrat), Arial, Helvetica, sans-serif",
         }}
@@ -49,16 +49,9 @@ export default function RootLayout({
           <OsBootSequence />
           <CustomCursor />
           <SpaceStarsBackground />
-
-
-
-
-
-
           <Navbar />
           <AiOsDesktopIcons />
-          <div className="pt-16 sm:pt-20 pb-36 sm:pb-40 min-h-screen relative z-10">{children}</div>
-
+          <div className="pt-24 sm:pt-28 pb-32 sm:pb-40 min-h-screen relative z-10 max-w-full overflow-x-hidden">{children}</div>
           <AiOsDesktopDock />
           <Footer />
         </Providers>

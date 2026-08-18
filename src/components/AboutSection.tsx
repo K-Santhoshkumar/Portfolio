@@ -8,7 +8,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="max-w-4xl mx-auto py-24 px-4 flex flex-col items-center text-center relative z-10"
+      className="max-w-5xl mx-auto py-8 sm:py-20 px-1 sm:px-4 flex flex-col items-center text-center relative z-10 w-full"
     >
       <AiOsWindow
         title="SYS_MODULE::ABOUT_ME"
@@ -17,18 +17,18 @@ export default function AboutSection() {
         depth={35}
         spotlightColor="rgba(0, 240, 255, 0.3)"
       >
-        <div className="flex flex-col items-center justify-center py-4">
-          <div className="mb-8 inline-block" style={{ transform: "translateZ(40px)" }}>
+        <div className="flex flex-col items-center justify-center py-2 sm:py-4">
+          <div className="mb-6 sm:mb-8 inline-block" style={{ transform: "translateZ(40px)" }}>
             <HolographicImage />
           </div>
           <h2
-            className="text-4xl md:text-5xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 font-mono"
+            className="text-2xl sm:text-4xl md:text-5xl font-black mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 font-mono"
             style={{ transform: "translateZ(30px)" }}
           >
             About Me
           </h2>
           <p
-            className="mb-10 text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-medium leading-relaxed"
+            className="mb-8 sm:mb-10 text-sm sm:text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-medium leading-relaxed px-2"
             style={{ transform: "translateZ(20px)" }}
           >
             I am a Full Stack Web Developer based in India, specializing in React, Next.js, and Python. I love building tools that are not only functional but also beautiful and easy to use.
@@ -37,7 +37,7 @@ export default function AboutSection() {
             <Link
               href="/Santhosh.pdf"
               download
-              className="inline-block px-10 py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/35 text-cyan-300 font-bold border border-cyan-400/50 backdrop-blur-md transition-all active:scale-95 shadow-xl shadow-cyan-500/30 font-mono text-sm tracking-wider"
+              className="inline-block px-6 sm:px-10 py-3 sm:py-4 rounded-full bg-cyan-500/20 hover:bg-cyan-500/35 text-cyan-300 font-bold border border-cyan-400/50 backdrop-blur-md transition-all active:scale-95 shadow-xl shadow-cyan-500/30 font-mono text-xs sm:text-sm tracking-wider"
             >
               Download Resume
             </Link>

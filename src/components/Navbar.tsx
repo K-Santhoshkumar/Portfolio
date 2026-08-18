@@ -175,7 +175,7 @@ export default function Navbar(): React.ReactElement {
           </span>
           <span className="text-slate-700">|</span>
           {/* Live Weather Widget */}
-          <span className="text-amber-300 flex items-center gap-1">
+          <span className="text-amber-300 hidden sm:flex items-center gap-1">
             <Sun className="w-3 h-3 text-amber-400 shrink-0" />
             {weatherInfo}
           </span>
@@ -184,21 +184,9 @@ export default function Navbar(): React.ReactElement {
         <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
           {/* Live Date & Time Widget (12-Hour Format) */}
           <span className="text-cyan-300 font-bold">
-            {systemDate} {"//"} {systemTime || "12:00:00 PM"}
+            <span className="hidden sm:inline">{systemDate} {"// "}</span>
+            {systemTime || "12:00:00 PM"}
           </span>
-          <span className="text-slate-700">|</span>
-
-          {/* Cyber Mode Switcher Toggle Button */}
-          <button
-            onClick={() => {
-              document.documentElement.classList.toggle("cyber-light-mode");
-            }}
-            className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-400/40 text-cyan-300 font-mono font-bold text-[9px] sm:text-[10px] transition-all"
-            title="Toggle Cyber Light / Dark OS Mode"
-          >
-            <span className="text-amber-300">☀️ / 🌙</span>
-            <span className="hidden xs:inline">CYBER_MODE</span>
-          </button>
         </div>
       </div>
 
