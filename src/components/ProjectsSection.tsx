@@ -7,7 +7,6 @@ import {
   ExternalLink,
   Github,
   ArrowUpRight,
-  Database,
   ChevronDown,
 } from "lucide-react";
 import { Project } from "@/data/projects";

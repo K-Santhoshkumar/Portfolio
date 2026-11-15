@@ -137,10 +137,10 @@ const EXACT_SKILL_GROUPS: SkillGroup[] = [
 export default function SkillsSection({ skillsList = [] }: SkillsSectionProps) {
   const [activeGroup, setActiveGroup] = useState<string>("all");
 
-  const totalSkillCount = EXACT_SKILL_GROUPS.reduce(
-    (acc, group) => acc + group.skills.length,
-    0
-  );
+  const totalSkillCount =
+    skillsList.length > 0
+      ? skillsList.length
+      : EXACT_SKILL_GROUPS.reduce((acc, group) => acc + group.skills.length, 0);
 
   const filteredGroups =
     activeGroup === "all"
