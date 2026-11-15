@@ -59,25 +59,50 @@ export default function ResumeSection({
         {/* Inline PDF Preview Modal/Frame */}
         {showPreview && (
           <div className="mt-8 pt-8 border-t border-[#252A32]">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <span className="text-xs font-mono text-[#656B75]">
-                Displaying {fileName}
+                Displaying: <strong className="text-[#F2F2EE]">{fileName}</strong>
               </span>
-              <a
-                href={resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-[#D4F933] font-semibold hover:underline flex items-center gap-1 font-mono"
-              >
-                Open in new tab <ExternalLink size={12} />
-              </a>
+              <div className="flex items-center gap-4">
+                <a
+                  href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#D4F933] font-semibold hover:underline flex items-center gap-1.5 font-mono"
+                >
+                  <span>Open in Fullscreen</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
             </div>
-            <div className="w-full h-[650px] rounded-xl overflow-hidden border border-[#252A32] bg-[#090A0C]">
-              <iframe
-                src={`${resumeUrl}#toolbar=0`}
-                className="w-full h-full border-0"
-                title="Resume Preview"
-              />
+
+            <div className="w-full h-[650px] sm:h-[750px] rounded-xl overflow-hidden border border-[#252A32] bg-[#090A0C] relative">
+              <object
+                data={`${resumeUrl}#view=FitH&toolbar=0`}
+                type="application/pdf"
+                className="w-full h-full"
+              >
+                <iframe
+                  src={`${resumeUrl}#toolbar=0`}
+                  className="w-full h-full border-0"
+                  title="Resume Document Preview"
+                >
+                  <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-[#101216]">
+                    <p className="text-xs text-[#92969F] font-mono mb-4">
+                      Inline PDF preview is not supported on this device browser.
+                    </p>
+                    <a
+                      href={resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="lime-btn text-xs py-2 px-4"
+                    >
+                      <ExternalLink size={13} />
+                      <span>Open PDF in New Tab</span>
+                    </a>
+                  </div>
+                </iframe>
+              </object>
             </div>
           </div>
         )}
