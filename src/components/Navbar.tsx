@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Download, Lock, Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { name: "About", href: "#about" },
@@ -33,8 +33,20 @@ export default function Navbar() {
       if (current) setActiveSection(current);
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Secret owner shortcut to access admin dashboard: Ctrl + Shift + A or Cmd + Shift + A
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a")) {
+        e.preventDefault();
+        window.location.href = "/admin";
+      }
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
@@ -101,15 +113,6 @@ export default function Navbar() {
             <Download size={12} />
             <span>Resume</span>
           </a>
-
-          {/* Admin Lock */}
-          <Link
-            href="/admin"
-            className="w-8 h-8 rounded-full bg-[#161A20] border border-[#252A32] hover:border-[#D4F933] flex items-center justify-center text-[#656B75] hover:text-[#D4F933] transition-colors"
-            title="Admin Portal"
-          >
-            <Lock size={12} />
-          </Link>
         </div>
 
         {/* Mobile Hamburger Toggle */}
@@ -146,24 +149,15 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="pt-2 border-t border-[#252A32] flex items-center justify-between">
+          <div className="pt-2 border-t border-[#252A32] flex items-center justify-center">
             <a
               href="/Santhosh.pdf"
               download="Santhoshkumar_K_Resume.pdf"
-              className="lime-btn text-xs py-2 px-4"
+              className="lime-btn text-xs py-2 px-4 w-full justify-center"
             >
               <Download size={13} />
               <span>Download CV</span>
             </a>
-
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-xs text-[#656B75] hover:text-[#D4F933] flex items-center gap-1 font-mono"
-            >
-              <Lock size={12} />
-              <span>Admin</span>
-            </Link>
           </div>
         </div>
       )}

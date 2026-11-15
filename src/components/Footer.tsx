@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { Lock, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -44,13 +43,6 @@ export default function Footer() {
           <a href="#contact" className="hover:text-[#D4F933] transition-colors">
             Contact
           </a>
-          <Link
-            href="/admin"
-            className="text-[#656B75] hover:text-[#D4F933] flex items-center gap-1 transition-colors"
-          >
-            <Lock size={12} />
-            Admin
-          </Link>
         </div>
 
         {/* Social Icons & Back to Top */}
