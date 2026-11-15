@@ -1,0 +1,214 @@
+// Prisma schema for Santhoshkumar K Portfolio & Admin Dashboard
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Hashed with bcrypt
+  name      String   @default("Santhoshkumar K")
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_users")
+}
+
+model Profile {
+  id              String   @id @default(cuid())
+  name            String   @default("Santhoshkumar K")
+  title           String   @default("Full Stack Web Developer & Software Engineer")
+  tagline         String   @default("Full Stack Web Developer crafting interactive, scalable, and visually stunning digital experiences.")
+  bio             String   @db.Text
+  approach        String?  @db.Text
+  funFact         String?  @db.Text
+  location        String   @default("Erode, Tamil Nadu, India")
+  status          String   @default("AVAILABLE")
+  phone           String   @default("+91 83447 90660")
+  email           String   @default("santhoshkumark2505@gmail.com")
+  githubUrl       String   @default("https://github.com/K-Santhoshkumar")
+  linkedinUrl     String   @default("https://www.linkedin.com/in/santhoshkumar-k-83a2a8298")
+  resumeUrl       String   @default("/Santhosh.pdf")
+  avatarUrl       String   @default("/portfolio_logo.png")
+  domainInterests String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model SkillCategory {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  order     Int      @default(0)
+  skills    Skill[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("skill_categories")
+}
+
+model Skill {
+  id          String         @id @default(cuid())
+  name        String         @unique
+  icon        String         // Icon identifier (e.g. FaJava, SiNextdotjs)
+  color       String         // Color or CSS class
+  type        String         @default("technical") // "technical" | "soft"
+  proficiency Int?           @default(90)
+  order       Int            @default(0)
+  isVisible   Boolean        @default(true)
+  categoryId  String?
+  category    SkillCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([categoryId])
+  @@index([type])
+  @@map("skills")
+}
+
+model Project {
+  id           String              @id @default(cuid())
+  numericId    String              @unique // Preserves original id: "1", "2", etc.
+  title        String
+  description  String              @db.Text
+  githubUrl    String
+  demoUrl      String?
+  imagePath    String
+  isFeatured   Boolean             @default(false)
+  order        Int                 @default(0)
+  isVisible    Boolean             @default(true)
+  technologies ProjectTechnology[]
+  features     String[]            // Array of strings
+  challenges   String[]            // Array of strings
+  solutions    String[]            // Array of strings
+  screenshots  String[]            // Array of screenshot URLs
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@map("projects")
+}
+
+model ProjectTechnology {
+  id        String   @id @default(cuid())
+  name      String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("project_technologies")
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  role        String
+  company     String
+  date        String
+  type        String   @default("FULL_TIME") // "FULL_TIME" | "INTERNSHIP"
+  order       Int      @default(0)
+  description String[] // Bullet points
+  techStack   String[] // Technologies
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("experiences")
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  degree      String
+  institution String
+  period      String
+  grade       String?  // e.g. "CGPA: 8.41", "91.5%"
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("educations")
+}
+
+model Certification {
+  id        String   @id @default(cuid())
+  title     String
+  issuer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("certifications")
+}
+
+model Leadership {
+  id          String   @id @default(cuid())
+  title       String
+  badge       String
+  description String   @db.Text
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("leaderships")
+}
+
+model Resume {
+  id        String   @id @default(cuid())
+  title     String   @default("Santhoshkumar K - Resume")
+  fileName  String   @default("Santhosh.pdf")
+  filePath  String   @default("/Santhosh.pdf")
+  fileSize  Int?     @default(150000)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("resumes")
+}
+
+model ContactInformation {
+  id        String   @id @default(cuid())
+  email     String   @default("santhoshkumark2505@gmail.com")
+  phone     String   @default("+91 83447 90660")
+  location  String   @default("Erode, Tamil Nadu, India")
+  github    String   @default("https://github.com/K-Santhoshkumar")
+  linkedin  String   @default("https://www.linkedin.com/in/santhoshkumar-k-83a2a8298")
+  updatedAt DateTime @updatedAt
+
+  @@map("contact_information")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("contact_messages")
+}
+
+model WebsiteSettings {
+  id              String   @id @default(cuid())
+  siteTitle       String   @default("Santhoshkumar K | Full Stack Web Developer & Software Engineer")
+  metaDescription String   @default("Personal developer portfolio of Santhoshkumar K")
+  ogImage         String   @default("/portfolio_logo.png")
+  showExperience  Boolean  @default(true)
+  showSkills      Boolean  @default(true)
+  showProjects    Boolean  @default(true)
+  showEducation   Boolean  @default(true)
+  showContact     Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
+
+  @@map("website_settings")
+}
+

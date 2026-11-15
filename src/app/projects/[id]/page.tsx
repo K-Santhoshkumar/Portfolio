@@ -1,22 +1,34 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-
-
-import { projects } from "../../../data/projects";
-import type { Project } from "@/data/projects";
-import { notFound, useParams } from "next/navigation";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Github, CheckCircle2, AlertTriangle, Zap, Layers, Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
-import AiOsWindow from "@/components/ui/AiOsWindow";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Github,
+  CheckCircle2,
+  AlertTriangle,
+  Lightbulb,
+  ArrowRight,
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ProjectShowcaseReel from "@/components/ProjectShowcaseReel";
+import { getProjectById, getProjects } from "@/lib/portfolioService";
+import { Project } from "@/data/projects";
 
-const DUMMY_IMAGE = "https://placehold.co/600x400?text=Project";
-const DUMMY_SCREENSHOT = "https://placehold.co/800x500?text=Screenshot";
+interface ProjectDetailsPageProps {
+  params: Promise<{ id: string }>;
+}
 
-function getProjectScreenshots(project: Project) {
-  if (project.title.includes("SocioPedia")) {
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map((p) => ({ id: p.id }));
+}
+
+function resolveProjectScreenshots(project: Project): string[] {
+  const title = project.title.toLowerCase();
+
+  if (title.includes("sociopedia") || title.includes("social media")) {
     return [
       "/SocioPedia_Screenshots/Screenshot 2025-07-09 165546.png",
       "/SocioPedia_Screenshots/Screenshot 2025-07-09 165452.png",
@@ -27,7 +39,8 @@ function getProjectScreenshots(project: Project) {
       "/SocioPedia_Screenshots/Screenshot 2025-07-09 165311.png",
     ];
   }
-  if (project.title.includes("Blog App")) {
+
+  if (title.includes("blog")) {
     return [
       "/Blog_app_Screenshots/Screenshot 2025-07-09 163812.png",
       "/Blog_app_Screenshots/Screenshot 2025-07-09 163748.png",
@@ -43,7 +56,8 @@ function getProjectScreenshots(project: Project) {
       "/Blog_app_Screenshots/Screenshot 2025-07-09 163454.png",
     ];
   }
-  if (project.title.includes("Recipe App")) {
+
+  if (title.includes("recipe")) {
     return [
       "/Recipe_app_Screenshots/Screenshot 2025-07-09 164418.png",
       "/Recipe_app_Screenshots/Screenshot 2025-07-09 164404.png",
@@ -56,7 +70,8 @@ function getProjectScreenshots(project: Project) {
       "/Recipe_app_Screenshots/Screenshot 2025-07-09 164210.png",
     ];
   }
-  if (project.title.includes("Excel Analysis Platform")) {
+
+  if (title.includes("nlp") || title.includes("excel") || title.includes("sql")) {
     return [
       "/Excel_analysis_platform_Screenshots/Screenshot 2025-07-09 165138.png",
       "/Excel_analysis_platform_Screenshots/Screenshot 2025-07-09 165123.png",
@@ -75,7 +90,38 @@ function getProjectScreenshots(project: Project) {
       "/Excel_analysis_platform_Screenshots/Screenshot 2025-07-09 164540.png",
     ];
   }
-  if (project.title.includes("Car Rental System")) {
+
+  if (title.includes("spotify") || title.includes("music")) {
+    return [
+      "/Music Streaming App/Screenshot 2026-02-04 210623.png",
+      "/Music Streaming App/Screenshot 2026-02-04 210735.png",
+      "/Music Streaming App/Screenshot 2026-02-04 210751.png",
+      "/Music Streaming App/Screenshot 2026-02-04 210926.png",
+      "/Music Streaming App/Screenshot 2026-02-04 210937.png",
+      "/Music Streaming App/Screenshot 2026-02-04 210953.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211011.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211030.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211105.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211139.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211156.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211212.png",
+      "/Music Streaming App/Screenshot 2026-02-04 211223.png",
+    ];
+  }
+
+  if (title.includes("chat") || title.includes("chatify")) {
+    return [
+      "/Real Time Chat App/Screenshot 2026-02-04 225733.png",
+      "/Real Time Chat App/Screenshot 2026-02-04 225742.png",
+      "/Real Time Chat App/Screenshot 2026-02-04 225801.png",
+      "/Real Time Chat App/Screenshot 2026-02-04 225847.png",
+      "/Real Time Chat App/Screenshot 2026-02-04 225903.png",
+      "/Real Time Chat App/Screenshot 2026-02-04 225932.png",
+      "/Real Time Chat App/Screenshot 2026-02-04 230112.png",
+    ];
+  }
+
+  if (title.includes("car rental")) {
     return [
       "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220825.png",
       "/Car_rental_system_Screenshots/Screenshot 2025-07-14 220848.png",
@@ -86,7 +132,8 @@ function getProjectScreenshots(project: Project) {
       "/Car_rental_system_Screenshots/Screenshot 2025-07-14 221046.png",
     ];
   }
-  if (project.title.toLowerCase().includes("bmi")) {
+
+  if (title.includes("bmi")) {
     return [
       "/BMI_Screenshots/Screenshot 2025-07-08 202021.png",
       "/BMI_Screenshots/Screenshot 2025-07-08 202009.png",
@@ -98,325 +145,246 @@ function getProjectScreenshots(project: Project) {
       "/BMI_Screenshots/Screenshot 2025-07-08 201749.png",
     ];
   }
-  if (project.screenshots && project.screenshots.length > 0) {
-    return project.screenshots.filter((src) => src && src.startsWith("/"));
+
+  if (title.includes("food")) {
+    return [
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130304.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130315.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130327.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130346.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130402.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130412.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130429.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130441.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130452.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130508.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130518.png",
+      "/Foodcart_Screenshots/Screenshot 2025-07-10 130543.png",
+    ];
   }
-  return [DUMMY_SCREENSHOT];
+
+  if (title.includes("weather")) {
+    return [
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122421.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122409.png",
+      "/Weather_app_Screenshots/Screenshot 2025-07-10 122357.png",
+    ];
+  }
+
+  if (title.includes("currency")) {
+    return [
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125644.png",
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125633.png",
+      "/Currency_convertor_Screenshots/Screenshot 2025-07-10 125619.png",
+    ];
+  }
+
+  if (title.includes("crud")) {
+    return [
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124231.png",
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124217.png",
+      "/React_CRUD_Screenshots/Screenshot 2025-07-10 124203.png",
+    ];
+  }
+
+  if (title.includes("watch")) {
+    return [
+      "/Branded_watch_web_Screenshots/Screenshot 2025-07-09 202636.png",
+      "/Branded_watch_web_Screenshots/Screenshot 2025-07-09 202622.png",
+      "/Branded_watch_web_Screenshots/Screenshot 2025-07-09 202611.png",
+    ];
+  }
+
+  if (project.screenshots && project.screenshots.length > 0) {
+    return project.screenshots;
+  }
+
+  return [project.imagePath];
 }
 
-// Automated Showcase Reel Component with Progress Bar Timer & Controls
-function AutomatedShowcaseReel({ screenshots, title }: { screenshots: string[]; title: string }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [progressKey, setProgressKey] = useState(0);
+export default async function ProjectDetailPage({ params }: ProjectDetailsPageProps) {
+  const { id } = await params;
+  const project = await getProjectById(id);
 
-  useEffect(() => {
-    if (screenshots.length <= 1 || !isPlaying) return;
+  if (!project) {
+    notFound();
+  }
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev === screenshots.length - 1 ? 0 : prev + 1));
-      setProgressKey((prev) => prev + 1);
-    }, 3500);
+  const allProjects = await getProjects();
+  const currentIndex = allProjects.findIndex((p) => p.id === id);
+  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
 
-    return () => clearInterval(interval);
-  }, [screenshots.length, isPlaying, currentIndex]);
-
-  const goLeft = () => {
-    setCurrentIndex((prev) => (prev === 0 ? screenshots.length - 1 : prev - 1));
-    setProgressKey((prev) => prev + 1);
-  };
-
-  const goRight = () => {
-    setCurrentIndex((prev) => (prev === screenshots.length - 1 ? 0 : prev + 1));
-    setProgressKey((prev) => prev + 1);
-  };
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.target as HTMLImageElement;
-    target.onerror = null;
-    target.src = DUMMY_IMAGE;
-  };
+  const screenshots = resolveProjectScreenshots(project);
 
   return (
-    <div className="w-full flex flex-col items-center">
-      {/* Automated Slideshow Screen */}
-      <div className="relative w-full h-72 md:h-[420px] rounded-2xl overflow-hidden bg-slate-950 border border-cyan-500/40 shadow-2xl mb-4 group/reel flex items-center justify-center">
-        {/* Animated Cyan Timer Progress Line at top */}
-        {isPlaying && screenshots.length > 1 && (
-          <motion.div
-            key={progressKey}
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{ duration: 3.5, ease: "linear" }}
-            className="absolute top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 z-40 shadow-[0_0_10px_rgba(0,240,255,0.8)]"
-          />
-        )}
+    <div className="min-h-screen flex flex-col bg-[#090A0C] text-[#F2F2EE] charcoal-grid-bg">
+      <Navbar />
 
-        {/* Previous Button */}
-        {screenshots.length > 1 && (
-          <button
-            onClick={goLeft}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-30 bg-slate-950/80 hover:bg-cyan-500 text-cyan-300 hover:text-slate-950 border border-cyan-400/50 rounded-full p-2.5 shadow-xl transition-colors font-bold text-sm"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-        )}
-
-        {/* Active Screenshot with Ken Burns Motion Effect */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={screenshots[currentIndex]}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1.03 }}
-            exit={{ opacity: 0, scale: 1.06 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="absolute inset-0 w-full h-full flex items-center justify-center"
-          >
-            <Image
-              src={screenshots[currentIndex]}
-              alt={`${title} screenshot ${currentIndex + 1}`}
-              fill
-              className="object-cover"
-              onError={handleImageError}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-            />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Next Button */}
-        {screenshots.length > 1 && (
-          <button
-            onClick={goRight}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-30 bg-slate-950/80 hover:bg-cyan-500 text-cyan-300 hover:text-slate-950 border border-cyan-400/50 rounded-full p-2.5 shadow-xl transition-colors font-bold text-sm"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        )}
-
-        {/* Automated Showcase Controls Ribbon (Bottom Right) */}
-        <div className="absolute bottom-3 right-3 z-30 flex items-center gap-2 bg-slate-950/90 border border-cyan-500/30 px-3 py-1.5 rounded-xl text-xs font-mono backdrop-blur-md">
-          <span className="text-cyan-300 font-bold">
-            {currentIndex + 1} / {screenshots.length}
-          </span>
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold ml-1.5 transition-colors"
-          >
-            {isPlaying ? (
-              <>
-                <Pause className="w-3.5 h-3.5 animate-pulse" /> PAUSE
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5" /> AUTO PLAY
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Cyber Frame Corner Accents */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400 pointer-events-none z-20" />
-        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400 pointer-events-none z-20" />
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400 pointer-events-none z-20" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400 pointer-events-none z-20" />
-      </div>
-
-      {/* Sliding Filmstrip Thumbnail Reel */}
-      {screenshots.length > 1 && (
-        <div className="flex gap-2.5 flex-wrap justify-center max-h-28 overflow-y-auto p-1 w-full">
-          {screenshots.map((src, i) => (
-            <motion.button
-              key={src}
-              onClick={() => {
-                setCurrentIndex(i);
-                setProgressKey((prev) => prev + 1);
-              }}
-              className={`relative rounded-xl overflow-hidden w-16 h-12 border-2 transition-all ${
-                currentIndex === i
-                  ? "border-cyan-400 scale-105 shadow-[0_0_14px_rgba(0,240,255,0.7)]"
-                  : "border-slate-800 opacity-60 hover:opacity-100"
-              }`}
-              whileHover={{ scale: 1.1 }}
-            >
-              <Image
-                src={src}
-                alt={`Thumbnail ${i + 1}`}
-                fill
-                className="object-cover"
-                onError={handleImageError}
-              />
-            </motion.button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-interface SectionProps {
-  title: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-}
-function CyberSection({ title, icon, children, defaultOpen = true }: SectionProps) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="mb-6 rounded-2xl bg-slate-900/80 border border-cyan-500/25 p-5 shadow-xl backdrop-blur-xl">
-      <button
-        className="flex items-center justify-between w-full font-mono font-bold text-base text-cyan-300 focus:outline-none"
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span className="flex items-center gap-2.5">
-          {icon}
-          {title}
-        </span>
-        <span
-          className={`transform transition-transform text-cyan-400 font-bold text-sm ${
-            open ? "rotate-90" : "rotate-0"
-          }`}
-        >
-          ▶
-        </span>
-      </button>
-      {open && <div className="mt-4 pt-3 border-t border-cyan-500/15">{children}</div>}
-    </div>
-  );
-}
-
-export default function ProjectDetail() {
-  const params = useParams<{ id: string }>() || { id: "" };
-  const { id } = params;
-  const project: Project | undefined = projects.find(
-    (p: Project) => p.id === id
-  );
-  if (!project) notFound();
-  const screenshots = getProjectScreenshots(project);
-
-  return (
-    <section className="py-10 px-2 md:px-4 max-w-6xl mx-auto font-mono relative z-10">
-      {/* Return to Project Explorer Bar */}
-      <div className="mb-6 flex items-center justify-between">
+      <main className="flex-1 pt-32 pb-24 px-4 sm:px-8 max-w-5xl mx-auto w-full relative z-10">
+        {/* Back Link */}
         <Link
-          href="/projects"
-          className="inline-flex items-center gap-2 text-cyan-300 hover:text-cyan-200 bg-slate-900/80 border border-cyan-500/30 px-4 py-2 rounded-xl text-xs font-bold transition-all hover:bg-slate-800 shadow-lg"
+          href="/#projects"
+          className="inline-flex items-center gap-2 text-xs font-mono text-[#92969F] hover:text-[#D4F933] transition-colors mb-8 px-4 py-2 rounded-full bg-[#161A20] border border-[#252A32] shadow-sm w-fit"
         >
-          <ArrowLeft className="w-4 h-4" /> Return to Project Explorer
+          <ArrowLeft size={13} />
+          <span>Back to Projects Archive</span>
         </Link>
-        <span className="text-xs font-mono text-slate-400 hidden sm:inline-block">
-          STATUS::DEPLOYED_SYSTEM
-        </span>
-      </div>
 
-      <AiOsWindow
-        title={`PROJECT_INSPECTOR::${project.id.toUpperCase()}`}
-        command={`./inspect_project.sh --id=${project.id}`}
-        statusText="INSPECTOR::ONLINE"
-        depth={35}
-      >
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* Automated Showcase Reel */}
-          <div className="lg:w-1/2 w-full">
-            <AutomatedShowcaseReel screenshots={screenshots} title={project.title} />
+        {/* Project Header */}
+        <div className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161A20] border border-[#252A32] text-xs font-mono text-[#D4F933] font-semibold mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4F933]" />
+            <span>CASE STUDY • {project.category || "Full Stack Application"}</span>
           </div>
 
-          {/* Project Details Panel */}
-          <div className="lg:w-1/2 w-full flex flex-col justify-between">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-black text-slate-100 mb-3 tracking-tight">
-                {project.title}
-              </h1>
+          <h1 className="text-3xl sm:text-5xl font-bold text-[#F2F2EE] tracking-tight mb-4">
+            {project.title}
+          </h1>
 
-              <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 font-sans">
-                {project.description}
-              </p>
+          <p className="text-base sm:text-lg text-[#92969F] leading-relaxed max-w-3xl mb-8">
+            {project.description}
+          </p>
 
-              {/* Tech Stack Badges */}
-              <div className="mb-6">
-                <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-widest block mb-2">
-                  TECHNOLOGY STACK
+          {/* Action CTAs & Tags */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[#252A32]">
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span key={tag} className="tech-tag">
+                  {tag}
                 </span>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <motion.span
-                      key={tag}
-                      whileHover={{ scale: 1.08 }}
-                      className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-slate-900 border border-cyan-500/30 text-cyan-300 shadow-sm hover:border-cyan-400 hover:shadow-[0_0_12px_rgba(0,240,255,0.3)] transition-all cursor-default"
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary text-xs"
+                >
+                  <Github size={14} />
+                  <span>Repository</span>
+                </a>
+              )}
+              {project.demoUrl && (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lime-btn text-xs"
+                >
+                  <ExternalLink size={14} />
+                  <span>Live Production</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Automated Interactive Showcase Reel & Gallery */}
+        <div className="mb-12">
+          <ProjectShowcaseReel screenshots={screenshots} title={project.title} />
+        </div>
+
+        {/* Features List */}
+        {project.features && project.features.length > 0 && (
+          <div className="glow-hover-card p-8 rounded-2xl mb-8">
+            <h3 className="text-lg font-bold text-[#F2F2EE] mb-6 flex items-center gap-2.5">
+              <CheckCircle2 size={18} className="text-[#D4F933]" />
+              <span>Key Features &amp; Architecture</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {project.features.map((feat, idx) => (
+                <div
+                  key={idx}
+                  className="glow-hover-smokey p-4 rounded-xl text-xs font-mono text-[#92969F] flex items-start gap-3"
+                >
+                  <span className="w-5 h-5 rounded-md bg-[#101216] text-[#D4F933] border border-[#232730] flex items-center justify-center text-[10px] font-bold shrink-0">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <span className="leading-relaxed">{feat}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Challenges & Solutions */}
+        {(project.challenges?.length > 0 || project.solutions?.length > 0) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {project.challenges && project.challenges.length > 0 && (
+              <div className="glow-hover-card p-8 rounded-2xl">
+                <h3 className="text-base font-bold text-[#F2F2EE] mb-6 flex items-center gap-2">
+                  <AlertTriangle size={18} className="text-[#D4F933]" />
+                  <span>Technical Challenges</span>
+                </h3>
+                <div className="space-y-3">
+                  {project.challenges.map((ch, idx) => (
+                    <div
+                      key={idx}
+                      className="glow-hover-smokey p-4 rounded-xl text-xs font-mono text-[#92969F] leading-relaxed"
                     >
-                      {tag}
-                    </motion.span>
+                      {ch}
+                    </div>
                   ))}
                 </div>
               </div>
+            )}
 
-              {/* Accordion Sections: Features, Challenges, Solutions */}
-              {project.features && project.features.length > 0 && (
-                <CyberSection title="System Features" icon={<Zap className="w-4 h-4 text-cyan-400" />}>
-                  <ul className="space-y-2 text-slate-200 text-xs sm:text-sm font-sans">
-                    {project.features.map((f, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CyberSection>
-              )}
-
-              {project.challenges && project.challenges.length > 0 && (
-                <CyberSection title="Technical Challenges" icon={<AlertTriangle className="w-4 h-4 text-amber-400" />}>
-                  <ul className="space-y-2 text-slate-200 text-xs sm:text-sm font-sans">
-                    {project.challenges.map((c, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <span className="text-amber-400 font-bold">&gt;</span>
-                        <span>{c}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CyberSection>
-              )}
-
-              {project.solutions && project.solutions.length > 0 && (
-                <CyberSection title="Engineering Solutions" icon={<Layers className="w-4 h-4 text-purple-400" />}>
-                  <ul className="space-y-2 text-slate-200 text-xs sm:text-sm font-sans">
-                    {project.solutions.map((s, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                        <span>{s}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CyberSection>
-              )}
-            </div>
-
-            {/* Action CTA Buttons */}
-            <div className="flex gap-4 mt-6 pt-4 border-t border-cyan-500/20 flex-wrap">
-              {project.githubUrl && (
-                <Link
-                  href={project.githubUrl}
-                  target="_blank"
-                  className="flex items-center gap-2.5 text-xs font-mono font-bold px-6 py-3.5 rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-300 hover:border-cyan-400 hover:bg-slate-800 transition-all shadow-xl hover:shadow-cyan-500/20"
-                >
-                  <Github className="w-4 h-4" /> View Source Code
-                </Link>
-              )}
-              {project.demoUrl && (
-                <Link
-                  href={project.demoUrl}
-                  target="_blank"
-                  className="flex items-center gap-2.5 text-xs font-mono font-black px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-slate-950 transition-all shadow-xl shadow-cyan-500/30"
-                >
-                  <ExternalLink className="w-4 h-4" /> Launch Live Demo
-                </Link>
-              )}
-            </div>
+            {project.solutions && project.solutions.length > 0 && (
+              <div className="glow-hover-card p-8 rounded-2xl">
+                <h3 className="text-base font-bold text-[#F2F2EE] mb-6 flex items-center gap-2">
+                  <Lightbulb size={18} className="text-[#D4F933]" />
+                  <span>Implemented Solutions</span>
+                </h3>
+                <div className="space-y-3">
+                  {project.solutions.map((sol, idx) => (
+                    <div
+                      key={idx}
+                      className="glow-hover-smokey p-4 rounded-xl text-xs font-mono text-[#92969F] leading-relaxed"
+                    >
+                      {sol}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+        )}
+
+        {/* Project Navigation Footer (Prev / Next) */}
+        <div className="pt-8 border-t border-[#232730] flex flex-col sm:flex-row items-center justify-between gap-4">
+          {prevProject ? (
+            <Link
+              href={`/projects/${prevProject.id}`}
+              className="glow-hover-card flex items-center gap-3 p-4 rounded-2xl text-left w-full sm:w-auto group"
+            >
+              <ArrowLeft size={16} className="text-[#D4F933] group-hover:-translate-x-1 transition-transform" />
+              <div>
+                <span className="text-[10px] font-mono text-[#656B75] uppercase block">PREVIOUS PROJECT</span>
+                <span className="text-xs font-bold text-[#F2F2EE] line-clamp-1 group-hover:text-[#D4F933] transition-colors">{prevProject.title}</span>
+              </div>
+            </Link>
+          ) : <div />}
+
+          {nextProject && (
+            <Link
+              href={`/projects/${nextProject.id}`}
+              className="glow-hover-card flex items-center gap-3 p-4 rounded-2xl text-right w-full sm:w-auto justify-end ml-auto group"
+            >
+              <div>
+                <span className="text-[10px] font-mono text-[#656B75] uppercase block">NEXT PROJECT</span>
+                <span className="text-xs font-bold text-[#F2F2EE] line-clamp-1 group-hover:text-[#D4F933] transition-colors">{nextProject.title}</span>
+              </div>
+              <ArrowRight size={16} className="text-[#D4F933] group-hover:translate-x-1 transition-transform" />
+            </Link>
+          )}
         </div>
-      </AiOsWindow>
-    </section>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
-
-

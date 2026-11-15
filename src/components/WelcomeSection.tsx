@@ -1,101 +1,224 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowDown, Terminal, Sparkles, Zap } from "lucide-react";
-
-
-
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import AiOsWindow from "./ui/AiOsWindow";
+import {
+  ArrowDown,
+  Download,
+  MapPin,
+  Clock,
+  Github,
+  Linkedin,
+  Mail,
+  Copy,
+  Check,
+  ArrowUpRight,
+} from "lucide-react";
+import { ProfileData } from "@/data/initialData";
 
-export default function WelcomeSection(): React.ReactElement {
-  const [typedText, setTypedText] = useState("");
-  const fullText = "./initialize_neural_kernel.sh --mode=interactive";
+interface WelcomeSectionProps {
+  profileData: ProfileData;
+}
+
+export default function WelcomeSection({ profileData }: WelcomeSectionProps) {
+  const [copied, setCopied] = useState(false);
+  const [timeString, setTimeString] = useState("");
 
   useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < fullText.length) {
-        setTypedText(fullText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 45);
-    return () => clearInterval(interval);
+    const updateTime = () => {
+      const now = new Date();
+      setTimeString(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Kolkata",
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
   }, []);
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(profileData.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
   return (
-    <section
-      id="welcome"
-      className="max-w-5xl mx-auto py-1 sm:py-6 px-2 sm:px-4 flex flex-col items-center justify-center min-h-0 text-center relative z-10"
-    >
-      <AiOsWindow
-        title="JARVIS_KERNEL_CORE::v4.2.0"
-        command={typedText || "./initialize_neural_kernel.sh"}
-        statusText="KERNEL::ONLINE"
-        depth={45}
-        spotlightColor="rgba(0, 240, 255, 0.4)"
-      >
-        <div className="flex flex-col items-center max-w-4xl py-1 sm:py-4 relative">
-          {/* AI OS System Core Floating Icon with Pulse Ring */}
-          <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="mb-3 sm:mb-8 p-2 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-500/25 via-purple-500/25 to-emerald-500/25 border border-cyan-400/50 shadow-2xl shadow-cyan-500/30 group cursor-pointer relative"
-            style={{ transform: "translateZ(40px)" }}
-          >
-            <div className="relative flex items-center justify-center w-11 h-11 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-slate-950 border border-cyan-400/70 shadow-inner group-hover:scale-110 transition-transform duration-300">
-              <Terminal className="w-6 h-6 sm:w-9 sm:h-9 text-cyan-400 animate-pulse" />
-              <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 absolute -top-1 -right-1 animate-ping" />
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400 absolute -bottom-1 -left-1 animate-spin" style={{ animationDuration: "6s" }} />
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-cyan-400/30 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </div>
-          </motion.div>
+    <section className="relative min-h-[92vh] pt-32 pb-16 px-4 sm:px-8 max-w-6xl mx-auto flex flex-col justify-between">
+      {/* Top Editorial Metadata Banner */}
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-[#252A32] text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161A20] border border-[#252A32] text-[#D4F933]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4F933] animate-pulse" />
+            <span className="font-semibold tracking-wider uppercase">AVAILABLE FOR ENGINEERING ROLES</span>
+          </div>
 
-          <motion.h1
-            className="text-xl xs:text-2xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-2 sm:mb-6 tracking-tight drop-shadow-2xl font-mono break-words w-full"
-            initial={{ opacity: 0, y: 80, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ type: "spring", stiffness: 120, damping: 12 }}
-            style={{ transform: "translateZ(60px)" }}
-          >
-            I am <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400 animate-gradient inline-block">Santhoshkumar K</span>
-          </motion.h1>
+          <span className="hidden sm:inline text-[#252A32]">•</span>
 
-          <motion.p
-            className="text-xs sm:text-xl md:text-2xl max-w-2xl mb-4 sm:mb-10 text-slate-200 font-medium drop-shadow leading-relaxed px-1 sm:px-2"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            style={{ transform: "translateZ(30px)" }}
-          >
-            Full Stack Web Developer crafting interactive,
-            scalable, and visually stunning digital experiences.
-          </motion.p>
+          <span className="text-[#92969F] flex items-center gap-1.5">
+            <MapPin size={12} className="text-[#D4F933]" />
+            Tamil Nadu, India
+          </span>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            style={{ transform: "translateZ(50px)" }}
-          >
-            <Link
-              href="#about"
-              className="group relative inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-10 py-2.5 sm:py-4 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-slate-950 font-black shadow-2xl shadow-cyan-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-cyan-300/60 font-mono tracking-wider text-xs sm:text-base"
-            >
-              Explore My Work <ArrowDown className="w-3.5 h-3.5 sm:w-5 sm:h-5 group-hover:translate-y-1.5 transition-transform" />
-              <div className="absolute inset-0 rounded-full bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </Link>
-          </motion.div>
+          <span className="hidden sm:inline text-[#252A32]">•</span>
+
+          <span className="text-[#656B75] flex items-center gap-1.5">
+            <Clock size={12} className="text-[#D4F933]" />
+            {timeString ? `${timeString} IST` : "UTC+5:30"}
+          </span>
         </div>
-      </AiOsWindow>
+
+        <div className="text-[#656B75] font-mono text-xs hidden md:block">
+          B.Tech (Hons.) IT • <strong className="text-[#F2F2EE]">8.41 CGPA</strong>
+        </div>
+      </div>
+
+      {/* Main Editorial Hero Typography */}
+      <div className="my-auto py-12 sm:py-16 space-y-8">
+        <div className="space-y-4">
+          <span className="text-xs sm:text-sm font-mono tracking-widest text-[#D4F933] uppercase font-bold block">
+            {profileData.title}
+          </span>
+
+          <h1 className="text-4xl sm:text-7xl lg:text-[5.25rem] font-bold tracking-tight text-[#F2F2EE] leading-[1.02]">
+            Santhoshkumar K
+          </h1>
+
+          <p className="text-2xl sm:text-4xl lg:text-[2.65rem] font-medium tracking-tight text-[#92969F] leading-[1.15] max-w-4xl">
+            Designing and engineering digital systems with intentional architecture, clean code, and thoughtful craft.
+          </p>
+        </div>
+
+        {/* Narrative Paragraph */}
+        <p className="text-base sm:text-lg text-[#92969F] leading-relaxed max-w-3xl font-normal">
+          Software engineer with strong computer science fundamentals in Data Structures &amp; Algorithms, Object-Oriented Programming, Operating Systems, and Database Management Systems. Experienced in building and testing full-stack applications with Python, Django, JavaScript, TypeScript, React, Node.js, and Java.
+        </p>
+
+        {/* Action Controls */}
+        <div className="flex flex-wrap items-center gap-3 pt-4">
+          <a href="#projects" className="lime-btn">
+            <span>View Featured Projects</span>
+            <ArrowDown size={14} />
+          </a>
+
+          <a
+            href="/Santhosh.pdf"
+            download="Santhoshkumar_K_Resume.pdf"
+            className="btn-secondary"
+          >
+            <Download size={14} />
+            <span>Download Resume</span>
+          </a>
+
+          <button
+            onClick={handleCopyEmail}
+            className="btn-secondary text-xs"
+            title="Copy email to clipboard"
+          >
+            {copied ? (
+              <>
+                <Check size={14} className="text-[#D4F933]" />
+                <span className="text-[#D4F933]">Email Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={14} />
+                <span>{profileData.email}</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Direct Social References */}
+        <div className="flex items-center gap-5 pt-2 text-xs font-mono text-[#92969F]">
+          <span className="text-[#656B75] uppercase tracking-wider text-[11px]">Connect:</span>
+          {profileData.githubUrl && (
+            <a
+              href={profileData.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#D4F933] transition-colors flex items-center gap-1"
+            >
+              <Github size={13} />
+              <span>GitHub</span>
+              <ArrowUpRight size={11} className="text-[#656B75]" />
+            </a>
+          )}
+          {profileData.linkedinUrl && (
+            <a
+              href={profileData.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#D4F933] transition-colors flex items-center gap-1"
+            >
+              <Linkedin size={13} />
+              <span>LinkedIn</span>
+              <ArrowUpRight size={11} className="text-[#656B75]" />
+            </a>
+          )}
+          <a
+            href="#contact"
+            className="hover:text-[#D4F933] transition-colors flex items-center gap-1"
+          >
+            <Mail size={13} />
+            <span>Contact Form</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Editorial Competency Index Strip with High Premium Hover */}
+      <div className="pt-8 border-t border-[#232730] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
+        <div className="glow-hover-card p-4 rounded-xl space-y-1">
+          <span className="text-[#656B75] block uppercase tracking-wider text-[10px] font-bold">
+            01 / BACKEND &amp; APIS
+          </span>
+          <span className="text-[#F2F2EE] font-semibold block">
+            Python, Django, Node.js, Spring Boot
+          </span>
+          <p className="text-[#92969F] text-[11px] leading-relaxed">
+            RESTful workflows, RBAC, JWT, rate-limiting &amp; modular services.
+          </p>
+        </div>
+
+        <div className="glow-hover-card p-4 rounded-xl space-y-1">
+          <span className="text-[#656B75] block uppercase tracking-wider text-[10px] font-bold">
+            02 / CLIENT ARCHITECTURE
+          </span>
+          <span className="text-[#F2F2EE] font-semibold block">
+            Next.js, React, TypeScript, Tailwind
+          </span>
+          <p className="text-[#92969F] text-[11px] leading-relaxed">
+            Component-driven systems, state machines &amp; responsive UI design.
+          </p>
+        </div>
+
+        <div className="glow-hover-card p-4 rounded-xl space-y-1">
+          <span className="text-[#656B75] block uppercase tracking-wider text-[10px] font-bold">
+            03 / DATA PERSISTENCE
+          </span>
+          <span className="text-[#F2F2EE] font-semibold block">
+            PostgreSQL, MongoDB, MySQL, SQL
+          </span>
+          <p className="text-[#92969F] text-[11px] leading-relaxed">
+            ACID compliance, schema modeling, query optimization &amp; connection pooling.
+          </p>
+        </div>
+
+        <div className="glow-hover-card p-4 rounded-xl space-y-1">
+          <span className="text-[#656B75] block uppercase tracking-wider text-[10px] font-bold">
+            04 / VERIFIED EXPERIENCE
+          </span>
+          <span className="text-[#D4F933] font-semibold block">
+            NMSWorks • GoalStox • GCE Erode
+          </span>
+          <p className="text-[#92969F] text-[11px] leading-relaxed">
+            Software Engineer at NMSWorks (Jul 2026 – Present), GoalStox SDE Intern, 8.41 CGPA.
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
-
-
-
-

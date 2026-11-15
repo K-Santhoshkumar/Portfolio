@@ -1,89 +1,246 @@
 "use client";
-import { motion } from "framer-motion";
-import MagicCard from "@/components/ui/MagicCard";
-import MagneticWrapper from "@/components/ui/MagneticWrapper";
-import AiOsWindow from "@/components/ui/AiOsWindow";
+
+import React, { useState } from "react";
 import {
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaJava,
-  FaPython,
-  FaReact,
-  FaNodeJs,
-  FaPhp,
-  FaGithub,
-} from "react-icons/fa";
-import { SiExpress, SiPostgresql, SiMongodb, SiVercel } from "react-icons/si";
+  Code,
+  Server,
+  Layers,
+  Database,
+  Cloud,
+  Workflow,
+  Brain,
+} from "lucide-react";
+import { SkillItem } from "@/data/skills";
 
-import React from "react";
+interface SkillsSectionProps {
+  skillsList?: SkillItem[];
+}
 
-const skills = [
-  { name: "Java", icon: <FaJava className="text-red-500" size={32} /> },
-  { name: "Python", icon: <FaPython className="text-blue-400" size={32} /> },
-  { name: "JavaScript", icon: <FaJs className="text-yellow-400" size={32} /> },
-  { name: "React", icon: <FaReact className="text-cyan-400" size={32} /> },
-  { name: "Node.js", icon: <FaNodeJs className="text-green-500" size={32} /> },
-  { name: "Express", icon: <SiExpress className="text-slate-100" size={32} /> },
-  { name: "PostgreSQL", icon: <SiPostgresql className="text-blue-400" size={32} /> },
-  { name: "MongoDB", icon: <SiMongodb className="text-emerald-500" size={32} /> },
-  { name: "HTML5", icon: <FaHtml5 className="text-orange-500" size={32} /> },
-  { name: "CSS3", icon: <FaCss3Alt className="text-blue-500" size={32} /> },
-  { name: "PHP", icon: <FaPhp className="text-indigo-400" size={32} /> },
-  { name: "GitHub", icon: <FaGithub className="text-slate-100" size={32} /> },
-  { name: "Vercel", icon: <SiVercel className="text-slate-100" size={32} /> },
+interface SkillGroup {
+  id: string;
+  number: string;
+  title: string;
+  icon: React.ElementType;
+  skills: string[];
+}
+
+const EXACT_SKILL_GROUPS: SkillGroup[] = [
+  {
+    id: "languages",
+    number: "01",
+    title: "Programming Languages",
+    icon: Code,
+    skills: ["Python", "Java", "JavaScript", "TypeScript", "SQL", "PHP"],
+  },
+  {
+    id: "backend",
+    number: "02",
+    title: "Backend Engineering",
+    icon: Server,
+    skills: [
+      "Node.js",
+      "Express.js",
+      "Django",
+      "Spring Boot",
+      "FastAPI",
+      "Flask",
+      "REST API Design",
+      "JWT Authentication",
+      "Socket.IO",
+      "WebSockets",
+      "Kafka",
+      "Prisma ORM",
+      "Mongoose",
+    ],
+  },
+  {
+    id: "frontend",
+    number: "03",
+    title: "Frontend Engineering",
+    icon: Layers,
+    skills: [
+      "React.js",
+      "Next.js",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
+      "EJS",
+      "Redux",
+      "Vite",
+      "SASS",
+      "Shadcn UI",
+    ],
+  },
+  {
+    id: "databases",
+    number: "04",
+    title: "Database Engineering",
+    icon: Database,
+    skills: [
+      "MongoDB",
+      "MongoDB Atlas",
+      "PostgreSQL",
+      "MySQL",
+      "SQLite",
+      "Supabase",
+    ],
+  },
+  {
+    id: "devops",
+    number: "05",
+    title: "Cloud & DevOps",
+    icon: Cloud,
+    skills: [
+      "Git",
+      "GitHub",
+      "CI/CD Pipelines",
+      "Docker",
+      "Vercel",
+      "Netlify",
+      "Linux",
+    ],
+  },
+  {
+    id: "practices",
+    number: "06",
+    title: "Tools & Practices",
+    icon: Workflow,
+    skills: [
+      "Postman",
+      "Agile/Scrum",
+      "Secure Coding",
+      "API Testing",
+      "Performance Optimization",
+      "VS Code",
+      "Axios",
+      "OAuth 2.0",
+    ],
+  },
+  {
+    id: "fundamentals",
+    number: "07",
+    title: "Core Fundamentals & Soft Skills",
+    icon: Brain,
+    skills: [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "Operating Systems",
+      "Database Management Systems",
+      "System Architecture",
+      "Analytical Thinking",
+      "Cross-Functional Collaboration",
+      "Problem Solving",
+    ],
+  },
 ];
 
+export default function SkillsSection({ skillsList = [] }: SkillsSectionProps) {
+  const [activeGroup, setActiveGroup] = useState<string>("all");
 
+  const totalSkillCount = EXACT_SKILL_GROUPS.reduce(
+    (acc, group) => acc + group.skills.length,
+    0
+  );
 
-export default function SkillsSection(): React.ReactElement {
+  const filteredGroups =
+    activeGroup === "all"
+      ? EXACT_SKILL_GROUPS
+      : EXACT_SKILL_GROUPS.filter((g) => g.id === activeGroup);
+
   return (
-    <section id="skills" className="py-8 sm:py-20 px-1 sm:px-4 max-w-6xl mx-auto text-foreground w-full">
-      <AiOsWindow
-        title="NEURAL_SKILL_MATRIX"
-        command="cat /sys/skills_database.db --all"
-        statusText="MATRIX::LOADED"
-        depth={30}
-      >
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-6 sm:mb-12"
-        >
-          <h2 className="text-xl sm:text-4xl md:text-5xl font-black mb-2 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 tracking-tight font-mono">
-            Technical Skills
+    <section id="skills" className="py-24 px-4 sm:px-8 max-w-6xl mx-auto border-t border-[#252A32]">
+      {/* Section Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161A20] border border-[#252A32] text-xs font-mono text-[#D4F933] uppercase tracking-widest mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4F933]" />
+            <span>Technical Capabilities &amp; Stack</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#F2F2EE]">
+            Technical Stack.
           </h2>
-          <p className="text-xs sm:text-lg text-slate-300 max-w-2xl mx-auto font-medium">
-            Technologies I work with regularly
-          </p>
-        </motion.div>
-        <div className="grid grid-cols-3 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-4">
-          {skills.map((skill, index) => (
-            <MagicCard
-              key={skill.name}
-              className="rounded-xl sm:rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 shadow-md group h-24 sm:h-36 w-full flex items-center justify-center"
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.04 }}
-                className="p-1.5 sm:p-4 flex flex-col items-center justify-center gap-1.5 sm:gap-3 h-full w-full"
-              >
-                <MagneticWrapper strength={0.5} className="z-20">
-                  <div className="p-2 sm:p-3 rounded-full bg-slate-950 skill-icon-bg border border-cyan-500/30 group-hover:scale-110 transition-transform duration-300 shadow-inner relative group-hover:border-cyan-400">
-                    {React.cloneElement(skill.icon as React.ReactElement<{ size?: number; className?: string }>, { size: 22, className: (skill.icon as React.ReactElement<{ className?: string }>).props.className })}
-                  </div>
-                </MagneticWrapper>
-                <h3 className="font-mono font-bold text-slate-200 group-hover:text-cyan-300 transition-colors text-center text-[10px] sm:text-xs z-10 relative truncate max-w-full">{skill.name}</h3>
-              </motion.div>
-            </MagicCard>
-          ))}
         </div>
-      </AiOsWindow>
+        <p className="text-xs sm:text-sm text-[#92969F] max-w-md font-mono">
+          Comprehensive inventory of verified languages, backend engines, databases, and architectural fundamentals ({totalSkillCount} active capabilities).
+        </p>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center gap-2 mb-12">
+        <button
+          onClick={() => setActiveGroup("all")}
+          className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
+            activeGroup === "all"
+              ? "lime-btn text-xs font-bold shadow-md"
+              : "bg-[#101216] text-[#92969F] border border-[#252A32] hover:border-[#D4F933] hover:text-[#D4F933] shadow-xs"
+          }`}
+        >
+          All Categories ({totalSkillCount})
+        </button>
+
+        {EXACT_SKILL_GROUPS.map((group) => (
+          <button
+            key={group.id}
+            onClick={() => setActiveGroup(group.id)}
+            className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
+              activeGroup === group.id
+                ? "lime-btn text-xs font-bold shadow-md"
+                : "bg-[#101216] text-[#92969F] border border-[#252A32] hover:border-[#D4F933] hover:text-[#D4F933] shadow-xs"
+            }`}
+          >
+            {group.number} {group.title.split(" ")[0]}
+          </button>
+        ))}
+      </div>
+
+      {/* Editorial Skill Groups Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredGroups.map((group) => {
+          const Icon = group.icon;
+
+          return (
+            <div
+              key={group.id}
+              className="glow-hover-card p-6 rounded-2xl flex flex-col justify-between group"
+            >
+              <div>
+                {/* Header */}
+                <div className="flex items-center justify-between pb-4 border-b border-[#232730] mb-5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#12151B] border border-[#232730] flex items-center justify-center text-[#D4F933] group-hover:border-[#D4F933]/60 transition-colors">
+                      <Icon size={16} />
+                    </div>
+                    <h3 className="text-sm font-bold text-[#F2F2EE] tracking-tight">
+                      {group.title}
+                    </h3>
+                  </div>
+                  <span className="text-xs font-mono font-bold text-[#656B75] group-hover:text-[#D4F933] transition-colors">
+                    /{group.number}
+                  </span>
+                </div>
+
+                {/* Skills Badges */}
+                <div className="flex flex-wrap gap-2">
+                  {group.skills.map((skillName) => (
+                    <span
+                      key={skillName}
+                      className="tech-tag text-xs"
+                    >
+                      {skillName}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Group Footer Count */}
+              <div className="pt-4 mt-6 border-t border-[#232730] flex items-center justify-between text-[11px] font-mono text-[#656B75]">
+                <span className="font-medium">CONFIRMED PROFICIENCY</span>
+                <span className="text-[#D4F933] font-bold">{group.skills.length} TECHNOLOGIES</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
-

@@ -1,25 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import SpaceStarsBackground from "../components/background/SpaceStarsBackground";
-import Footer from "../components/Footer";
 import { Providers } from "./providers";
-import AiOsDesktopDock from "../components/ui/AiOsDesktopDock";
-import AiOsDesktopIcons from "../components/ui/AiOsDesktopIcons";
-import OsBootSequence from "../components/ui/OsBootSequence";
-import CustomCursor from "../components/ui/CustomCursor";
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -28,8 +9,42 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "SANTHOSHKUMAR K's Portfolio",
-  description: "SANTHOSHKUMAR K's Portfolio",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://santhoshkumar-portfolio.vercel.app"
+  ),
+  title: "Santhoshkumar K | Full Stack Web Developer & Software Engineer",
+  description:
+    "Personal portfolio of Santhoshkumar K - Full Stack Web Developer & Software Engineer specializing in scalable web systems, React, Next.js, Java, and Python.",
+  keywords: [
+    "Santhoshkumar K",
+    "Full Stack Developer",
+    "Software Engineer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Java",
+    "Spring Boot",
+    "Python",
+    "Portfolio",
+  ],
+  authors: [{ name: "Santhoshkumar K" }],
+  openGraph: {
+    title: "Santhoshkumar K | Portfolio",
+    description:
+      "Full Stack Web Developer & Software Engineer crafting scalable, interactive digital experiences.",
+    url: "https://santhoshkumar-portfolio.vercel.app",
+    siteName: "Santhoshkumar K Portfolio",
+    images: [
+      {
+        url: "/portfolio_logo.png",
+        width: 800,
+        height: 800,
+        alt: "Santhoshkumar K",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -38,26 +53,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="overflow-x-hidden max-w-full">
-      <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased min-h-screen cursor-default overflow-x-hidden max-w-full`}
-        style={{
-          fontFamily: "var(--font-montserrat), Arial, Helvetica, sans-serif",
-        }}
-      >
-        <Providers>
-          <OsBootSequence />
-          <CustomCursor />
-          <SpaceStarsBackground />
-          <Navbar />
-          <AiOsDesktopIcons />
-          <div className="pt-24 sm:pt-28 pb-32 sm:pb-40 min-h-screen relative z-10 max-w-full overflow-x-hidden">{children}</div>
-          <AiOsDesktopDock />
-          <Footer />
-        </Providers>
+    <html lang="en" className="scroll-smooth">
+      <body className="min-h-screen bg-[#07080A] text-[#F2F2EE] selection:bg-[#D4F933]/20 selection:text-[#D4F933] smokey-black-bg antialiased">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
 }
-
-
