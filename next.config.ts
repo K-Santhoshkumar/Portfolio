@@ -20,6 +20,23 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/Santhosh.pdf",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/pdf",
+          },
+          {
+            key: "Content-Disposition",
+            value: "inline",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [
           {

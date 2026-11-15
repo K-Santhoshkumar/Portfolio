@@ -1,7 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { FileText, Download, Eye, ExternalLink, CheckCircle } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import {
+  FileText,
+  Download,
+  Eye,
+  ExternalLink,
+  CheckCircle,
+  Globe,
+  Monitor,
+} from "lucide-react";
 
 interface ResumeSectionProps {
   resumeUrl?: string;
@@ -13,6 +21,27 @@ export default function ResumeSection({
   fileName = "Santhosh.pdf",
 }: ResumeSectionProps) {
   const [showPreview, setShowPreview] = useState(false);
+  const [viewerMode, setViewerMode] = useState<"google" | "native">("google");
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const currentOrigin = window.location.origin;
+      setOrigin(currentOrigin);
+      // If running on localhost, Google Docs viewer cannot access private loopback, so use native
+      if (currentOrigin.includes("localhost") || currentOrigin.includes("127.0.0.1")) {
+        setViewerMode("native");
+      } else {
+        // In production on Vercel, default to Google Docs viewer for universal cross-browser/mobile rendering
+        setViewerMode("google");
+      }
+    }
+  }, []);
+
+  const fullPdfUrl = origin ? `${origin}${resumeUrl}` : resumeUrl;
+  const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(
+    fullPdfUrl
+  )}&embedded=true`;
 
   return (
     <section id="resume" className="py-20 px-4 sm:px-8 max-w-6xl mx-auto border-t border-[#252A32]">
@@ -59,10 +88,42 @@ export default function ResumeSection({
         {/* Inline PDF Preview Modal/Frame */}
         {showPreview && (
           <div className="mt-8 pt-8 border-t border-[#252A32]">
+            {/* Viewer Control Bar */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <span className="text-xs font-mono text-[#656B75]">
-                Displaying: <strong className="text-[#F2F2EE]">{fileName}</strong>
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono text-[#656B75]">
+                  Viewer:
+                </span>
+                <div className="inline-flex rounded-lg bg-[#161A20] border border-[#252A32] p-0.5 text-[11px] font-mono">
+                  <button
+                    type="button"
+                    onClick={() => setViewerMode("google")}
+                    className={`px-2.5 py-1 rounded-md transition-all flex items-center gap-1.5 ${
+                      viewerMode === "google"
+                        ? "bg-[#D4F933] text-black font-bold shadow-xs"
+                        : "text-[#92969F] hover:text-[#F2F2EE]"
+                    }`}
+                    title="Universal Cloud Viewer (works on all devices & mobile)"
+                  >
+                    <Globe size={11} />
+                    <span>Cloud Viewer</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewerMode("native")}
+                    className={`px-2.5 py-1 rounded-md transition-all flex items-center gap-1.5 ${
+                      viewerMode === "native"
+                        ? "bg-[#D4F933] text-black font-bold shadow-xs"
+                        : "text-[#92969F] hover:text-[#F2F2EE]"
+                    }`}
+                    title="Native Browser PDF Reader"
+                  >
+                    <Monitor size={11} />
+                    <span>Native Reader</span>
+                  </button>
+                </div>
+              </div>
+
               <div className="flex items-center gap-4">
                 <a
                   href={resumeUrl}
@@ -76,33 +137,21 @@ export default function ResumeSection({
               </div>
             </div>
 
+            {/* Embedded Viewport */}
             <div className="w-full h-[650px] sm:h-[750px] rounded-xl overflow-hidden border border-[#252A32] bg-[#090A0C] relative">
-              <object
-                data={`${resumeUrl}#view=FitH&toolbar=0`}
-                type="application/pdf"
-                className="w-full h-full"
-              >
+              {viewerMode === "google" ? (
+                <iframe
+                  src={googleViewerUrl}
+                  className="w-full h-full border-0 bg-white"
+                  title="Cloud Resume Viewer"
+                />
+              ) : (
                 <iframe
                   src={`${resumeUrl}#toolbar=0`}
                   className="w-full h-full border-0"
-                  title="Resume Document Preview"
-                >
-                  <div className="flex flex-col items-center justify-center h-full p-8 text-center bg-[#101216]">
-                    <p className="text-xs text-[#92969F] font-mono mb-4">
-                      Inline PDF preview is not supported on this device browser.
-                    </p>
-                    <a
-                      href={resumeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="lime-btn text-xs py-2 px-4"
-                    >
-                      <ExternalLink size={13} />
-                      <span>Open PDF in New Tab</span>
-                    </a>
-                  </div>
-                </iframe>
-              </object>
+                  title="Native Resume Viewer"
+                />
+              )}
             </div>
           </div>
         )}
